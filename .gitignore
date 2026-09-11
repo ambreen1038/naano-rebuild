@@ -30,6 +30,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# agent capture hook internal state (not the logs themselves - those are committed)
+.claude/.capture-state/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
