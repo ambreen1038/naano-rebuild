@@ -24,6 +24,20 @@ export async function createCampaign(formData: FormData) {
     redirect("/login");
   }
 
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("active_brand_id")
+    .eq("id", user.id)
+    .single();
+
+  if (!profile?.active_brand_id) {
+    redirect(
+      `/dashboard/campaigns/new?error=${encodeURIComponent(
+        "No active brand selected."
+      )}`
+    );
+  }
+
   const name = String(formData.get("name") ?? "");
   const objective = String(formData.get("objective") ?? "");
   const targetVerticalInput = String(formData.get("target_vertical") ?? "");
@@ -39,7 +53,7 @@ export async function createCampaign(formData: FormData) {
   const { data: campaign, error } = await supabase
     .from("campaigns")
     .insert({
-      brand_id: user.id,
+      brand_id: profile.active_brand_id,
       name,
       objective,
       target_vertical: targetVertical,

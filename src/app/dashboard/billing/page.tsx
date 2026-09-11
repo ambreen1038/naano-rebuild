@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { HelpCircle } from "lucide-react";
-import { createClient } from "@/lib/supabase/server";
+import { requireBrand } from "@/lib/auth/roles";
 import { BillingBalanceCard } from "@/components/dashboard/billing/BillingBalanceCard";
 
 const TABS = [
@@ -24,16 +24,7 @@ export default async function BillingPage({
   const activeTab =
     tab === "top_up" || tab === "booking" ? tab : ("all" as const);
 
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("wallet_balance")
-    .eq("id", user!.id)
-    .single();
+  const { supabase, brand } = await requireBrand();
 
   let query = supabase
     .from("invoices")
@@ -63,7 +54,7 @@ export default async function BillingPage({
       </div>
 
       <div className="mt-4">
-        <BillingBalanceCard walletBalance={Number(profile?.wallet_balance ?? 0)} />
+        <BillingBalanceCard walletBalance={Number(brand.wallet_balance ?? 0)} />
       </div>
 
       <div className="mt-4 overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">

@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { ResultsTabs } from "@/components/dashboard/results/ResultsTabs";
 import { CampaignFilterSelect } from "@/components/dashboard/results/CampaignFilterSelect";
 import { PerformanceChart } from "@/components/dashboard/results/PerformanceChart";
+import { analyticsWindow, bucketClicksByDay } from "@/lib/analytics-window";
 
 type BookingRow = {
   id: string;
@@ -49,9 +50,9 @@ export default async function AnalyticsPage({
   );
   const reservations = bookings.length;
 
-  const thirtyDaysAgo = Date.now() - 30 * 86400000;
+  const { since, buckets } = analyticsWindow(30);
   const qualifiedClicksLast30 = (clicks ?? []).filter(
-    (c) => new Date(c.clicked_at).getTime() >= thirtyDaysAgo
+    (c) => new Date(c.clicked_at).getTime() >= since
   ).length;
 
   const totalMedianViews = publishedBookings.reduce(
@@ -61,19 +62,7 @@ export default async function AnalyticsPage({
   const estimatedLow = Math.round(totalMedianViews * 0.8);
   const estimatedHigh = Math.round(totalMedianViews * 1.2);
 
-  const dayBuckets: Record<string, number> = {};
-  for (let i = 29; i >= 0; i--) {
-    const d = new Date(Date.now() - i * 86400000);
-    dayBuckets[d.toISOString().slice(0, 10)] = 0;
-  }
-  (clicks ?? []).forEach((c) => {
-    const day = c.clicked_at.slice(0, 10);
-    if (day in dayBuckets) dayBuckets[day] += 1;
-  });
-  const series = Object.entries(dayBuckets).map(([date, count]) => ({
-    date,
-    count,
-  }));
+  const series = bucketClicksByDay(clicks ?? [], buckets);
 
   const attributionMap = new Map<
     string,

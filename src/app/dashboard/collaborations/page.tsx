@@ -20,10 +20,9 @@ export default async function CollaborationsPage() {
       .order("created_at", { ascending: false }),
   ]);
 
-  return (
-    <CollaborationsClient
-      bookings={(bookings ?? []) as BookingRow[]}
-      campaigns={campaigns ?? []}
-    />
-  );
+  // Supabase types a to-one foreign-table select as an array; these are always
+  // single rows since campaign_id/creator_id are both not-null foreign keys.
+  const rows = (bookings ?? []) as unknown as BookingRow[];
+
+  return <CollaborationsClient bookings={rows} campaigns={campaigns ?? []} />;
 }

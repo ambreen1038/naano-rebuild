@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { ChevronDown, SlidersHorizontal } from "lucide-react";
 
 export type PerformanceFilters = {
@@ -72,9 +72,16 @@ export function PerformanceFiltersPanel({
   onApply: (next: PerformanceFilters) => void;
 }) {
   const [draft, setDraft] = useState(value);
+  const [appliedValue, setAppliedValue] = useState(value);
   const detailsRef = useRef<HTMLDetailsElement>(null);
 
-  useEffect(() => setDraft(value), [value]);
+  // Resync the draft when the parent swaps in a new filter object (apply or
+  // clear). React's documented "adjust state when props change" pattern —
+  // cheaper and less error-prone than doing it in an effect.
+  if (value !== appliedValue) {
+    setAppliedValue(value);
+    setDraft(value);
+  }
 
   function close() {
     if (detailsRef.current) detailsRef.current.open = false;

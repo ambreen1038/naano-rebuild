@@ -1,47 +1,45 @@
-import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { Topbar } from "@/components/dashboard/Topbar";
+import { PortalShell } from "@/components/dashboard/PortalShell";
+import { requireBrand } from "@/lib/auth/roles";
 
 export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // Redirects signed-out users to /login and creators to /creator, and
+  // resolves which brand/space is currently active.
+  const { supabase, user, brand } = await requireBrand();
 
-  if (!user) {
-    redirect("/login");
-  }
+  // RLS ("brands: members can view") already scopes this to only the
+  // spaces this user belongs to — no explicit membership join needed.
+  const { data: brands } = await supabase
+    .from("brands")
+    .select("id, company_name")
+    .order("created_at", { ascending: true });
 
-  const { data: profile, error: profileError } = await supabase
-    .from("profiles")
-    .select("company_name, wallet_balance")
-    .eq("id", user.id)
-    .single();
-
-  if (profileError) {
-    console.error("[dashboard] profile query failed:", profileError.message);
-  }
-
-  const companyName = profile?.company_name ?? user.email ?? "Your company";
+  const companyName = brand.company_name || user.email || "Your company";
 
   return (
-    <div className="flex flex-1">
-      <Sidebar companyName={companyName} />
-      <div className="flex flex-1 flex-col">
+    <PortalShell
+      sidebar={
+        <Sidebar
+          brands={brands ?? []}
+          activeBrandId={brand.id}
+          activeCompanyName={companyName}
+        />
+      }
+      topbar={
         <Topbar
           companyName={companyName}
           email={user.email ?? ""}
-          walletBalance={Number(profile?.wallet_balance ?? 0)}
+          walletBalance={Number(brand.wallet_balance ?? 0)}
+          settingsHref="/dashboard/settings"
         />
-        <main className="flex-1 overflow-y-auto bg-zinc-50 dark:bg-black">
-          {children}
-        </main>
-      </div>
-    </div>
+      }
+    >
+      {children}
+    </PortalShell>
   );
 }

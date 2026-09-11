@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { runProductSummaryPipeline } from "@/lib/product-summary";
 
 const INDUSTRIES = [
   "sales-tech",
@@ -15,7 +16,7 @@ const INDUSTRIES = [
   "other",
 ] as const;
 
-export async function signup(formData: FormData) {
+export async function signupBrand(formData: FormData) {
   const email = String(formData.get("email") ?? "");
   const password = String(formData.get("password") ?? "");
   const fullName = String(formData.get("full_name") ?? "");
@@ -24,6 +25,16 @@ export async function signup(formData: FormData) {
   const industry = (INDUSTRIES as readonly string[]).includes(industryInput)
     ? industryInput
     : "other";
+  const website = String(formData.get("website") ?? "").trim();
+
+  const fail = (msg: string) =>
+    redirect(`/signup/brand/email?error=${encodeURIComponent(msg)}`);
+
+  try {
+    new URL(website);
+  } catch {
+    fail("Enter your company website, including https://");
+  }
 
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signUp({
@@ -31,15 +42,17 @@ export async function signup(formData: FormData) {
     password,
     options: {
       data: {
+        role: "brand",
         full_name: fullName,
         company_name: companyName,
         industry,
+        website,
       },
     },
   });
 
   if (error) {
-    redirect(`/signup?error=${encodeURIComponent(error.message)}`);
+    fail(error.message);
   }
 
   if (!data.session) {
@@ -50,5 +63,50 @@ export async function signup(formData: FormData) {
     );
   }
 
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("active_brand_id")
+    .eq("id", data.user!.id)
+    .single();
+
+  if (profile?.active_brand_id) {
+    // Best-effort — a failed scan shouldn't block landing in the new space.
+    await runProductSummaryPipeline(supabase, profile.active_brand_id, website);
+  }
+
   redirect("/dashboard");
+}
+
+export async function signupCreator(formData: FormData) {
+  const email = String(formData.get("email") ?? "");
+  const password = String(formData.get("password") ?? "");
+  const fullName = String(formData.get("full_name") ?? "");
+
+  const supabase = await createClient();
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        role: "creator",
+        full_name: fullName,
+      },
+    },
+  });
+
+  if (error) {
+    redirect(
+      `/signup/creator/email?error=${encodeURIComponent(error.message)}`
+    );
+  }
+
+  if (!data.session) {
+    redirect(
+      `/login?message=${encodeURIComponent(
+        "Check your email to confirm your account, then log in."
+      )}`
+    );
+  }
+
+  redirect("/creator/onboarding/linkedin");
 }

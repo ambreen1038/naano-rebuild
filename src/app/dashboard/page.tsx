@@ -10,8 +10,9 @@ import {
   Users,
   Mic,
 } from "lucide-react";
-import { createClient } from "@/lib/supabase/server";
+import { requireBrand } from "@/lib/auth/roles";
 import { avatarColor } from "@/lib/avatar-color";
+import { INDUSTRY_TO_TAG } from "@/lib/industry-mapping";
 
 function StatCard({
   icon: Icon,
@@ -80,9 +81,9 @@ type CreatorCardData = {
   id: string;
   name: string;
   headline: string;
-  vertical: string;
   price_per_post: number;
-  fit: number;
+  follower_count: number;
+  industryMatch: boolean;
 };
 
 function CreatorCard({ creator }: { creator: CreatorCardData }) {
@@ -104,9 +105,11 @@ function CreatorCard({ creator }: { creator: CreatorCardData }) {
         <p className="text-center text-xs text-zinc-500">
           {creator.headline}
         </p>
-        <span className="mt-2 rounded-full bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-600 dark:bg-blue-950 dark:text-blue-400">
-          {creator.fit}% ICP
-        </span>
+        {creator.industryMatch && (
+          <span className="mt-2 rounded-full bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-600 dark:bg-blue-950 dark:text-blue-400">
+            Industry match
+          </span>
+        )}
         <p className="mt-2 text-sm text-zinc-500">
           from{" "}
           <span className="font-semibold text-zinc-900 dark:text-zinc-50">
@@ -126,22 +129,13 @@ function CreatorCard({ creator }: { creator: CreatorCardData }) {
 }
 
 export default async function OverviewPage() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("full_name, company_name, industry")
-    .eq("id", user!.id)
-    .single();
+  const { supabase, user, profile, brand } = await requireBrand();
 
   const firstName = (profile?.full_name || user?.email || "there").split(
     " "
   )[0];
-  const companyName = profile?.company_name ?? "your company";
-  const industry = profile?.industry ?? "other";
+  const companyName = brand.company_name || "your company";
+  const industry = brand.industry ?? "other";
 
   const [{ data: activeBookings }, { count: postsPublished }, { data: creators }] =
     await Promise.all([
@@ -153,9 +147,14 @@ export default async function OverviewPage() {
         .from("bookings")
         .select("*", { count: "exact", head: true })
         .in("status", ["live", "completed"]),
+      // Same real-signups-only filter as the Creators tab — see that page
+      // for why (excludes supabase/seed.sql's fictional demo rows).
       supabase
         .from("creators")
-        .select("id, name, headline, vertical, price_per_post, follower_count")
+        .select(
+          "id, name, headline, industry_tags, price_per_post, follower_count"
+        )
+        .not("user_id", "is", null)
         .order("follower_count", { ascending: false }),
     ]);
 
@@ -163,16 +162,23 @@ export default async function OverviewPage() {
     (activeBookings ?? []).map((b) => b.creator_id)
   ).size;
 
+  // "other" (and any industry with no bridge into the industry_tags
+  // vocabulary) has no real signal to match against — those creators just
+  // keep the natural follower-count order instead of a fabricated fit.
+  const targetTag = INDUSTRY_TO_TAG[industry] ?? null;
   const rankedCreators: CreatorCardData[] = (creators ?? [])
     .map((c) => ({
       id: c.id,
       name: c.name,
       headline: c.headline,
-      vertical: c.vertical,
       price_per_post: Number(c.price_per_post),
-      fit: c.vertical === industry ? 90 : 60,
+      follower_count: c.follower_count,
+      industryMatch: targetTag !== null && c.industry_tags.includes(targetTag),
     }))
-    .sort((a, b) => b.fit - a.fit)
+    .sort((a, b) => {
+      if (a.industryMatch !== b.industryMatch) return a.industryMatch ? -1 : 1;
+      return b.follower_count - a.follower_count;
+    })
     .slice(0, 8);
 
   return (

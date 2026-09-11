@@ -39,7 +39,7 @@ export default async function CampaignDetailPage({
         </span>
       </div>
 
-      <div className="mt-6 max-w-2xl rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-950">
+      <div className="mt-6 rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-950">
         <h2 className="text-sm font-semibold text-zinc-500">
           Objective / brief
         </h2>

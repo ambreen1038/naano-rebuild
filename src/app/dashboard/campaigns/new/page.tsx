@@ -20,12 +20,12 @@ export default async function NewCampaignPage({
   const { error } = await searchParams;
 
   return (
-    <div className="mx-auto max-w-xl p-8">
+    <div className="p-8">
       <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
         Create a campaign
       </h1>
       <p className="mt-1 text-sm text-zinc-500">
-        A few details, then it's live in your marketplace.
+        A few details, then it&apos;s live in your marketplace.
       </p>
 
       {error && (
