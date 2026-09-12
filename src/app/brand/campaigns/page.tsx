@@ -71,7 +71,7 @@ export default async function CampaignsPage({
           Campaigns
         </h1>
         <Link
-          href="/dashboard/campaigns/new"
+          href="/brand/campaigns/new"
           className="flex shrink-0 items-center gap-1.5 rounded-full bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700"
         >
           <Plus className="h-4 w-4" />
@@ -86,8 +86,8 @@ export default async function CampaignsPage({
               key={tab.value}
               href={
                 tab.value === "all"
-                  ? "/dashboard/campaigns"
-                  : `/dashboard/campaigns?status=${tab.value}`
+                  ? "/brand/campaigns"
+                  : `/brand/campaigns?status=${tab.value}`
               }
               className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
                 activeTab === tab.value
@@ -167,14 +167,14 @@ export default async function CampaignsPage({
                 </div>
                 <div className="mt-4 flex items-center justify-end gap-3 text-sm">
                   <Link
-                    href={`/dashboard/campaigns/${campaign.id}`}
+                    href={`/brand/campaigns/${campaign.id}`}
                     className="font-semibold text-zinc-900 hover:underline dark:text-zinc-50"
                   >
                     Open campaign →
                   </Link>
                   <span className="text-zinc-300 dark:text-zinc-700">/</span>
                   <Link
-                    href={`/dashboard/campaigns/${campaign.id}`}
+                    href={`/brand/campaigns/${campaign.id}`}
                     className="flex items-center gap-1 text-zinc-500 hover:underline"
                   >
                     <FileText className="h-3.5 w-3.5" />
@@ -215,7 +215,7 @@ export default async function CampaignsPage({
               </div>
             </div>
             <Link
-              href="/dashboard/campaigns/new"
+              href="/brand/campaigns/new"
               className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
             >
               Get started →

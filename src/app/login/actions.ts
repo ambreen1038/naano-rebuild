@@ -32,5 +32,5 @@ export async function login(formData: FormData) {
   // requireBrand/requireCreator enforce the real gate either way (and now
   // fail closed on a fetch error) — this just lands on the right page on
   // the first try instead of a bounce.
-  redirect(profile?.role === "creator" ? "/creator" : "/dashboard");
+  redirect(profile?.role === "creator" ? "/creator" : "/brand");
 }

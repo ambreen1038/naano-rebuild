@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 
 // Next.js 16 renamed the `middleware` file convention to `proxy` — this is
 // that file, not legacy middleware. Refreshes the Supabase session cookie on
-// every request and gates /dashboard behind a signed-in user.
+// every request and gates /brand and /creator behind a signed-in user.
 export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request });
 
@@ -33,7 +33,7 @@ export async function proxy(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   const isProtected =
-    request.nextUrl.pathname.startsWith("/dashboard") ||
+    request.nextUrl.pathname.startsWith("/brand") ||
     request.nextUrl.pathname.startsWith("/creator");
 
   if (!user && isProtected) {

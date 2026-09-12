@@ -3,10 +3,11 @@ import {
   CreatorCollaborationsClient,
   type CreatorBookingRow,
 } from "@/components/dashboard/creator-collaborations/CreatorCollaborationsClient";
+import type { OfferRow } from "@/components/dashboard/creator-collaborations/CreatorOfferModal";
 
 type RawBookingRow = {
   id: string;
-  status: "draft" | "scheduled" | "live" | "completed";
+  status: "invited" | "draft" | "scheduled" | "live" | "completed" | "declined";
   price_agreed: number;
   scheduled_date: string | null;
   campaign: { name: string; brand: { company_name: string | null } | null } | null;
@@ -55,21 +56,34 @@ export default async function CreatorCollaborationsPage() {
   const rawBookings = (bookingsData ?? []) as unknown as RawBookingRow[];
   const bookingIds = rawBookings.map((b) => b.id);
 
-  const { data: clickRows } = bookingIds.length
-    ? await supabase
-        .from("click_events")
-        .select("booking_id")
-        .in("booking_id", bookingIds)
-    : { data: [] as { booking_id: string }[] };
+  const [{ data: clickRows }, { data: offerRows }] = await Promise.all([
+    bookingIds.length
+      ? supabase.from("click_events").select("booking_id").in("booking_id", bookingIds)
+      : Promise.resolve({ data: [] as { booking_id: string }[] }),
+    bookingIds.length
+      ? supabase
+          .from("booking_offers")
+          .select("id, booking_id, offered_by, amount, message, status, created_at")
+          .in("booking_id", bookingIds)
+      : Promise.resolve({ data: [] as (OfferRow & { booking_id: string })[] }),
+  ]);
 
   const clickCounts = new Map<string, number>();
   for (const c of clickRows ?? []) {
     clickCounts.set(c.booking_id, (clickCounts.get(c.booking_id) ?? 0) + 1);
   }
 
+  const offersByBooking = new Map<string, OfferRow[]>();
+  for (const o of offerRows ?? []) {
+    const list = offersByBooking.get(o.booking_id) ?? [];
+    list.push(o);
+    offersByBooking.set(o.booking_id, list);
+  }
+
   const bookings: CreatorBookingRow[] = rawBookings.map((b) => ({
     ...b,
     clicks: clickCounts.get(b.id) ?? 0,
+    offers: offersByBooking.get(b.id) ?? [],
   }));
 
   return <CreatorCollaborationsClient bookings={bookings} />;

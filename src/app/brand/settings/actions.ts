@@ -78,7 +78,7 @@ export async function updateBrandSettings(formData: FormData): Promise<ActionRes
 
   if (error) return { ok: false, error: error.message };
 
-  revalidatePath("/dashboard", "layout");
+  revalidatePath("/brand", "layout");
   return { ok: true };
 }
 
@@ -91,6 +91,6 @@ export async function rescanWebsite(): Promise<ActionResult> {
 
   await runProductSummaryPipeline(supabase, brand.id, brand.website);
 
-  revalidatePath("/dashboard", "layout");
+  revalidatePath("/brand", "layout");
   return { ok: true };
 }

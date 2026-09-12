@@ -26,6 +26,6 @@ export async function addBudget(
   });
   if (error) return { error: error.message };
 
-  revalidatePath("/dashboard", "layout");
+  revalidatePath("/brand", "layout");
   return { success: true, newBalance: Number(newBalance) };
 }

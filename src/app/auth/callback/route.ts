@@ -60,6 +60,6 @@ export async function GET(request: NextRequest) {
 
   // /creator gates on onboarding progress and forwards to the right step.
   return NextResponse.redirect(
-    `${origin}${effectiveRole === "creator" ? "/creator" : "/dashboard"}`
+    `${origin}${effectiveRole === "creator" ? "/creator" : "/brand"}`
   );
 }

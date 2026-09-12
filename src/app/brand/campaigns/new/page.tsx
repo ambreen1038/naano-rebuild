@@ -100,7 +100,7 @@ export default async function NewCampaignPage({
             Launch campaign
           </button>
           <Link
-            href="/dashboard/campaigns"
+            href="/brand/campaigns"
             className="text-sm font-medium text-zinc-500 hover:underline"
           >
             Cancel

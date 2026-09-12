@@ -1,9 +1,9 @@
 import Link from "next/link";
 
 const TABS = [
-  { key: "analytics", href: "/dashboard/results", label: "Analytics" },
-  { key: "leads", href: "/dashboard/results/leads", label: "Leads" },
-  { key: "posts", href: "/dashboard/results/posts", label: "Posts" },
+  { key: "analytics", href: "/brand/analytics", label: "Analytics" },
+  { key: "leads", href: "/brand/analytics/leads", label: "Leads" },
+  { key: "posts", href: "/brand/analytics/posts", label: "Posts" },
 ] as const;
 
 export function ResultsTabs({

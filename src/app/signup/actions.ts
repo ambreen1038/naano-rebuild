@@ -74,7 +74,7 @@ export async function signupBrand(formData: FormData) {
     await runProductSummaryPipeline(supabase, profile.active_brand_id, website);
   }
 
-  redirect("/dashboard");
+  redirect("/brand");
 }
 
 export async function signupCreator(formData: FormData) {

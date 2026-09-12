@@ -16,11 +16,11 @@ export type NavItem = {
 };
 
 export const NAV_ITEMS: NavItem[] = [
-  { href: "/dashboard", label: "Overview", icon: LayoutGrid },
-  { href: "/dashboard/creators", label: "Creators", icon: Store },
-  { href: "/dashboard/campaigns", label: "Campaigns", icon: Layers },
-  { href: "/dashboard/collaborations", label: "Collaborations", icon: Users },
-  { href: "/dashboard/results", label: "Results", icon: TrendingUp },
-  { href: "/dashboard/messages", label: "Messages", icon: MessageCircle },
-  { href: "/dashboard/billing", label: "Billing", icon: CreditCard },
+  { href: "/brand/overview", label: "Overview", icon: LayoutGrid },
+  { href: "/brand/creators", label: "Creators", icon: Store },
+  { href: "/brand/campaigns", label: "Campaigns", icon: Layers },
+  { href: "/brand/collaborations", label: "Collaborations", icon: Users },
+  { href: "/brand/analytics", label: "Results", icon: TrendingUp },
+  { href: "/brand/messages", label: "Messages", icon: MessageCircle },
+  { href: "/brand/billing", label: "Billing", icon: CreditCard },
 ];

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown, Fingerprint, Loader2, X } from "lucide-react";
-import { updateBrandSettings, rescanWebsite } from "@/app/dashboard/settings/actions";
+import { updateBrandSettings, rescanWebsite } from "@/app/brand/settings/actions";
 
 const INDUSTRIES: { value: string; label: string }[] = [
   { value: "sales-tech", label: "Sales Tech" },

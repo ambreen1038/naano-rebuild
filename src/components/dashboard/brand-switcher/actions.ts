@@ -13,7 +13,7 @@ export async function switchActiveBrand(brandId: string): Promise<ActionResult> 
   });
   if (error) return { ok: false, error: error.message };
 
-  redirect("/dashboard");
+  redirect("/brand/overview");
 }
 
 export async function createBrand(formData: FormData): Promise<ActionResult> {
@@ -37,5 +37,5 @@ export async function createBrand(formData: FormData): Promise<ActionResult> {
   // Best-effort — a failed scan shouldn't block switching into the space.
   await runProductSummaryPipeline(supabase, brandId as string, website);
 
-  redirect("/dashboard");
+  redirect("/brand/overview");
 }

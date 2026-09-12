@@ -136,7 +136,7 @@ export async function requireCreator() {
     );
   }
 
-  if (profile.role !== "creator") redirect("/dashboard");
+  if (profile.role !== "creator") redirect("/brand");
 
   const { data: onboarding } = await supabase
     .from("creator_onboarding")

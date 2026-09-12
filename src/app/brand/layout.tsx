@@ -3,7 +3,7 @@ import { Topbar } from "@/components/dashboard/Topbar";
 import { PortalShell } from "@/components/dashboard/PortalShell";
 import { requireBrand } from "@/lib/auth/roles";
 
-export default async function DashboardLayout({
+export default async function BrandLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -35,7 +35,7 @@ export default async function DashboardLayout({
           companyName={companyName}
           email={user.email ?? ""}
           walletBalance={Number(brand.wallet_balance ?? 0)}
-          settingsHref="/dashboard/settings"
+          settingsHref="/brand/settings"
         />
       }
     >

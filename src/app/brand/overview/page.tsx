@@ -118,7 +118,7 @@ function CreatorCard({ creator }: { creator: CreatorCardData }) {
           /post
         </p>
         <Link
-          href="/dashboard/creators"
+          href="/brand/creators"
           className="mt-3 w-full rounded-full border border-zinc-200 py-2 text-center text-sm font-medium text-blue-600 hover:bg-blue-50 dark:border-zinc-800 dark:hover:bg-blue-950"
         >
           Add
@@ -191,7 +191,7 @@ export default async function OverviewPage() {
           </h1>
         </div>
         <Link
-          href="/dashboard/campaigns"
+          href="/brand/campaigns"
           className="flex shrink-0 items-center gap-1.5 rounded-full bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700"
         >
           <Plus className="h-4 w-4" />
@@ -227,7 +227,7 @@ export default async function OverviewPage() {
               title="Top up your wallet"
               badge="Blocked"
               badgeClass="bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-400"
-              href="/dashboard/billing"
+              href="/brand/billing"
             />
             <TodoRow
               title="Book a call for your next campaign"
@@ -238,7 +238,7 @@ export default async function OverviewPage() {
               title="Find new creators for your next campaign"
               badge="Suggested"
               badgeClass="bg-zinc-100 text-zinc-600 dark:bg-zinc-900 dark:text-zinc-400"
-              href="/dashboard/creators"
+              href="/brand/creators"
             />
           </div>
         </div>
@@ -286,7 +286,7 @@ export default async function OverviewPage() {
               </span>
             </div>
             <Link
-              href="/dashboard/creators"
+              href="/brand/creators"
               className="text-sm font-medium text-blue-600 hover:underline"
             >
               Explore

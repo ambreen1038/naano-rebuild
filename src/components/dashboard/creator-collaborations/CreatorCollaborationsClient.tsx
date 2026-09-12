@@ -1,14 +1,17 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { CreatorOfferModal, type OfferRow } from "./CreatorOfferModal";
 
 export type CreatorBookingRow = {
   id: string;
-  status: "draft" | "scheduled" | "live" | "completed";
+  status: "invited" | "draft" | "scheduled" | "live" | "completed" | "declined";
   price_agreed: number;
   scheduled_date: string | null;
   campaign: { name: string; brand: { company_name: string | null } | null } | null;
   clicks: number;
+  offers: OfferRow[];
 };
 
 const TABS = [
@@ -26,6 +29,10 @@ const STATUS_BADGE: Record<
   CreatorBookingRow["status"],
   { label: string; className: string }
 > = {
+  invited: {
+    label: "Invitation",
+    className: "bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-400",
+  },
   draft: {
     label: "Needs action",
     className: "bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-400",
@@ -43,22 +50,31 @@ const STATUS_BADGE: Record<
     label: "Completed",
     className: "bg-zinc-100 text-zinc-600 dark:bg-zinc-900 dark:text-zinc-400",
   },
+  declined: {
+    label: "Declined",
+    className: "bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-400",
+  },
 };
 
 const NEXT_ACTION: Record<CreatorBookingRow["status"], string> = {
+  invited: "Accept or decline",
   draft: "Confirm the brief",
   scheduled: "Prepare your post",
   live: "Track results",
   completed: "—",
+  declined: "—",
 };
 
 function tabMatches(tab: TabValue, status: CreatorBookingRow["status"]) {
   if (tab === "all") return true;
   if (tab === "active") return status === "scheduled" || status === "live";
-  if (tab === "needs_action") return status === "draft";
+  if (tab === "needs_action") return status === "invited" || status === "draft";
+  if (tab === "declined") return status === "declined";
   if (tab === "completed") return status === "completed";
-  // "applications_sent" and "declined": no data source yet — see the page
-  // component for why. Genuinely always empty, not a filter bug.
+  // "applications_sent": creator-initiated Opportunities applications
+  // (campaign_applications) aren't surfaced on this page yet — a real,
+  // separate data source, not wired here. Genuinely always empty, not a
+  // filter bug.
   return false;
 }
 
@@ -69,8 +85,12 @@ export function CreatorCollaborationsClient({
 }: {
   bookings: CreatorBookingRow[];
 }) {
+  const router = useRouter();
   const [tab, setTab] = useState<TabValue>("all");
   const [page, setPage] = useState(1);
+  const [activeBookingId, setActiveBookingId] = useState<string | null>(null);
+
+  const activeBooking = bookings.find((b) => b.id === activeBookingId) ?? null;
 
   const tabCounts = useMemo(() => {
     const counts: Record<string, number> = {};
@@ -175,7 +195,19 @@ export function CreatorCollaborationsClient({
                         {canHaveClicks ? `${b.clicks} clicks` : "—"}
                       </td>
                       <td className="px-5 py-3 text-zinc-600 dark:text-zinc-400">
-                        {NEXT_ACTION[b.status]}
+                        {b.status === "invited" || b.offers.length > 0 ? (
+                          <button
+                            type="button"
+                            onClick={() => setActiveBookingId(b.id)}
+                            className="font-medium text-blue-600 hover:underline"
+                          >
+                            {b.status === "invited"
+                              ? "Respond to invitation"
+                              : "View offer"}
+                          </button>
+                        ) : (
+                          NEXT_ACTION[b.status]
+                        )}
                       </td>
                       <td className="px-5 py-3 text-zinc-600 dark:text-zinc-400">
                         {b.scheduled_date
@@ -216,6 +248,24 @@ export function CreatorCollaborationsClient({
           </div>
         </div>
       </div>
+
+      {activeBooking && (
+        <CreatorOfferModal
+          booking={{
+            id: activeBooking.id,
+            status: activeBooking.status,
+            price_agreed: activeBooking.price_agreed,
+            brandName: activeBooking.campaign?.brand?.company_name ?? "This brand",
+            campaignName: activeBooking.campaign?.name ?? "Campaign",
+          }}
+          offers={activeBooking.offers}
+          onClose={() => setActiveBookingId(null)}
+          onUpdated={() => {
+            setActiveBookingId(null);
+            router.refresh();
+          }}
+        />
+      )}
     </div>
   );
 }

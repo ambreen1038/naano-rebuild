@@ -200,7 +200,7 @@ export default async function AnalyticsPage({
             </div>
           </div>
           <Link
-            href="/dashboard/results/posts"
+            href="/brand/analytics/posts"
             className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600 hover:underline"
           >
             View posts →

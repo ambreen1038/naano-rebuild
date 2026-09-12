@@ -25,7 +25,7 @@ export default async function CampaignDetailPage({
   return (
     <div className="p-8">
       <Link
-        href="/dashboard/campaigns"
+        href="/brand/campaigns"
         className="text-sm text-zinc-500 hover:underline"
       >
         ← Back to campaigns

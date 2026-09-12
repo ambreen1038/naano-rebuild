@@ -9,7 +9,7 @@ import {
   Lock,
   X,
 } from "lucide-react";
-import { addBudget } from "@/app/dashboard/billing/actions";
+import { addBudget } from "@/app/brand/billing/actions";
 
 const PRESETS = [2500, 5000, 10000, 25000];
 const MINIMUM = 500;

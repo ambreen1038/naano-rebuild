@@ -16,7 +16,7 @@ export function Sidebar({
 }) {
   return (
     <SidebarShell
-      rootPath="/dashboard"
+      rootPath="/brand/overview"
       navItems={NAV_ITEMS}
       header={(expanded) => (
         <div className="flex flex-col gap-3 border-b border-zinc-200 px-4 py-4 dark:border-zinc-800">

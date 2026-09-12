@@ -32,7 +32,7 @@ export async function createCampaign(formData: FormData) {
 
   if (!profile?.active_brand_id) {
     redirect(
-      `/dashboard/campaigns/new?error=${encodeURIComponent(
+      `/brand/campaigns/new?error=${encodeURIComponent(
         "No active brand selected."
       )}`
     );
@@ -66,9 +66,9 @@ export async function createCampaign(formData: FormData) {
 
   if (error) {
     redirect(
-      `/dashboard/campaigns/new?error=${encodeURIComponent(error.message)}`
+      `/brand/campaigns/new?error=${encodeURIComponent(error.message)}`
     );
   }
 
-  redirect(`/dashboard/campaigns/${campaign.id}`);
+  redirect(`/brand/campaigns/${campaign.id}`);
 }
