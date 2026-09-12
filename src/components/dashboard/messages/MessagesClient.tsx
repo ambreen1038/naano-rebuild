@@ -8,6 +8,7 @@ import {
   Bug,
   ChevronDown,
   HelpCircle,
+  Loader2,
   MessageCircle,
   MessageSquarePlus,
   Pencil,
@@ -671,7 +672,11 @@ export function MessagesClient({
                 disabled={sending || !draft.trim()}
                 className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-600 text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
               >
-                <Send className="h-3.5 w-3.5" />
+                {sending ? (
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                ) : (
+                  <Send className="h-3.5 w-3.5" />
+                )}
               </button>
             </form>
           </div>

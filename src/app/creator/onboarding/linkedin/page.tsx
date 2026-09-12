@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ShieldCheck } from "lucide-react";
 import { AuthSplitLayout } from "@/components/auth/AuthSplitLayout";
 import { CreatorCardPreview } from "@/components/auth/CreatorCardPreview";
+import { SubmitButton } from "@/components/auth/SubmitButton";
 import { requireCreator } from "@/lib/auth/roles";
 import { importLinkedInProfile } from "../actions";
 
@@ -68,12 +69,12 @@ export default async function LinkedInImportPage({
           </p>
         </div>
 
-        <button
-          type="submit"
+        <SubmitButton
           className="rounded-lg bg-blue-500 py-3 text-sm font-semibold text-white hover:bg-blue-600"
+          pendingText="Importing…"
         >
           Import my public profile
-        </button>
+        </SubmitButton>
       </form>
     </AuthSplitLayout>
   );

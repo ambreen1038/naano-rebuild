@@ -2,6 +2,7 @@ import Link from "next/link";
 import { AuthSplitLayout } from "@/components/auth/AuthSplitLayout";
 import { OAuthButtons } from "@/components/auth/OAuthButtons";
 import { PasswordField } from "@/components/auth/PasswordField";
+import { SubmitButton } from "@/components/auth/SubmitButton";
 import { login } from "./actions";
 
 const inputClass =
@@ -92,12 +93,12 @@ export default async function LoginPage({
           />
         </div>
 
-        <button
-          type="submit"
+        <SubmitButton
           className="mt-2 rounded-full bg-blue-600 py-3 text-sm font-semibold text-white hover:bg-blue-700"
+          pendingText="Signing in…"
         >
           Sign in
-        </button>
+        </SubmitButton>
       </form>
 
       <p className="mt-6 text-center text-sm text-zinc-500">

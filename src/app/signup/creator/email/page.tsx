@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AuthSplitLayout } from "@/components/auth/AuthSplitLayout";
 import { CreatorCardPreview } from "@/components/auth/CreatorCardPreview";
+import { SubmitButton } from "@/components/auth/SubmitButton";
 import { signupCreator } from "@/app/signup/actions";
 
 const inputClass =
@@ -66,12 +67,12 @@ export default async function CreatorEmailSignupPage({
             className={inputClass}
           />
         </label>
-        <button
-          type="submit"
+        <SubmitButton
           className="mt-2 rounded-full bg-blue-600 py-3 text-sm font-semibold text-white hover:bg-blue-700"
+          pendingText="Continuing…"
         >
           Continue
-        </button>
+        </SubmitButton>
       </form>
     </AuthSplitLayout>
   );

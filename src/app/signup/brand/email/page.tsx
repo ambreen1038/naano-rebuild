@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AuthSplitLayout } from "@/components/auth/AuthSplitLayout";
+import { SubmitButton } from "@/components/auth/SubmitButton";
 import { signupBrand } from "@/app/signup/actions";
 
 const INDUSTRIES = [
@@ -111,12 +112,12 @@ export default async function BrandEmailSignupPage({
             className={inputClass}
           />
         </label>
-        <button
-          type="submit"
+        <SubmitButton
           className="mt-2 rounded-full bg-blue-600 py-3 text-sm font-semibold text-white hover:bg-blue-700"
+          pendingText="Creating account…"
         >
           Create account
-        </button>
+        </SubmitButton>
       </form>
     </AuthSplitLayout>
   );

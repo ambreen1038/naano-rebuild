@@ -16,6 +16,7 @@ import {
 import { logout } from "@/app/actions";
 import { LaunchPlanWidget } from "@/components/dashboard/LaunchPlanWidget";
 import { useMobileSidebar } from "@/components/dashboard/PortalShell";
+import { SubmitButton } from "@/components/auth/SubmitButton";
 import type { LaunchPlanStatus } from "@/lib/launch-plan";
 
 export function Topbar({
@@ -194,13 +195,13 @@ export function Topbar({
               </Link>
             )}
             <form action={logout} className="mt-1 border-t border-zinc-100 pt-1 dark:border-zinc-900">
-              <button
-                type="submit"
-                className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-900"
+              <SubmitButton
+                className="w-full justify-start rounded-lg px-2 py-1.5 text-left text-sm text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-900"
+                pendingText="Signing out…"
               >
                 <LogOut className="h-4 w-4" />
                 Sign out
-              </button>
+              </SubmitButton>
             </form>
           </div>
         </details>

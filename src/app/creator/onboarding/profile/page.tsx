@@ -2,6 +2,7 @@ import Image from "next/image";
 import { redirect } from "next/navigation";
 import { AuthSplitLayout } from "@/components/auth/AuthSplitLayout";
 import { CreatorCardPreview } from "@/components/auth/CreatorCardPreview";
+import { SubmitButton } from "@/components/auth/SubmitButton";
 import { requireCreator } from "@/lib/auth/roles";
 import { COUNTRIES } from "@/lib/countries";
 import { INDUSTRY_TAGS } from "@/lib/industries";
@@ -162,12 +163,12 @@ export default async function CreatorProfileStepPage({
           </div>
         </fieldset>
 
-        <button
-          type="submit"
+        <SubmitButton
           className="mt-2 rounded-lg bg-blue-600 py-3 text-sm font-semibold text-white hover:bg-blue-700"
+          pendingText="Saving…"
         >
           Continue
-        </button>
+        </SubmitButton>
       </form>
     </AuthSplitLayout>
   );

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { AuthSplitLayout } from "@/components/auth/AuthSplitLayout";
 import { CreatorCardPreview } from "@/components/auth/CreatorCardPreview";
+import { SubmitButton } from "@/components/auth/SubmitButton";
 import { requireCreator } from "@/lib/auth/roles";
 import { completeOnboarding } from "../actions";
 import { recommendPrice } from "@/lib/price-recommendation";
@@ -119,12 +120,12 @@ export default async function CreatorPriceStepPage({
           </p>
         </div>
 
-        <button
-          type="submit"
+        <SubmitButton
           className="mt-4 w-full rounded-lg bg-blue-600 py-3 text-sm font-semibold text-white hover:bg-blue-700"
+          pendingText="Creating…"
         >
           Create my marketplace profile
-        </button>
+        </SubmitButton>
       </form>
     </AuthSplitLayout>
   );
