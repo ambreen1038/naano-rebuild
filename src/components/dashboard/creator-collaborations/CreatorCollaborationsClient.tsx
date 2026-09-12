@@ -14,6 +14,35 @@ export type CreatorBookingRow = {
   offers: OfferRow[];
 };
 
+export type CreatorApplicationRow = {
+  id: string;
+  status: "pending" | "accepted" | "declined" | "withdrawn";
+  created_at: string;
+  campaign: { name: string; brand: { company_name: string | null } | null } | null;
+};
+
+const APPLICATION_STATUS_BADGE: Record<
+  CreatorApplicationRow["status"],
+  { label: string; className: string }
+> = {
+  pending: {
+    label: "Pending review",
+    className: "bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-400",
+  },
+  accepted: {
+    label: "Accepted",
+    className: "bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400",
+  },
+  declined: {
+    label: "Declined",
+    className: "bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-400",
+  },
+  withdrawn: {
+    label: "Withdrawn",
+    className: "bg-zinc-100 text-zinc-600 dark:bg-zinc-900 dark:text-zinc-400",
+  },
+};
+
 const TABS = [
   { value: "all", label: "All" },
   { value: "active", label: "Active" },
@@ -71,10 +100,9 @@ function tabMatches(tab: TabValue, status: CreatorBookingRow["status"]) {
   if (tab === "needs_action") return status === "invited" || status === "draft";
   if (tab === "declined") return status === "declined";
   if (tab === "completed") return status === "completed";
-  // "applications_sent": creator-initiated Opportunities applications
-  // (campaign_applications) aren't surfaced on this page yet — a real,
-  // separate data source, not wired here. Genuinely always empty, not a
-  // filter bug.
+  // "applications_sent" isn't a booking status at all — it renders from
+  // the separate `applications` prop instead (see the render branch
+  // below), so bookings never match it.
   return false;
 }
 
@@ -82,8 +110,10 @@ const LINES_PER_PAGE = 10;
 
 export function CreatorCollaborationsClient({
   bookings,
+  applications,
 }: {
   bookings: CreatorBookingRow[];
+  applications: CreatorApplicationRow[];
 }) {
   const router = useRouter();
   const [tab, setTab] = useState<TabValue>("all");
@@ -95,17 +125,29 @@ export function CreatorCollaborationsClient({
   const tabCounts = useMemo(() => {
     const counts: Record<string, number> = {};
     for (const t of TABS) {
-      counts[t.value] = bookings.filter((b) => tabMatches(t.value, b.status)).length;
+      counts[t.value] =
+        t.value === "applications_sent"
+          ? applications.length
+          : bookings.filter((b) => tabMatches(t.value, b.status)).length;
     }
     return counts;
-  }, [bookings]);
+  }, [bookings, applications]);
 
   const filtered = useMemo(
     () => bookings.filter((b) => tabMatches(tab, b.status)),
     [bookings, tab]
   );
 
-  const totalPages = Math.max(1, Math.ceil(filtered.length / LINES_PER_PAGE));
+  const isApplicationsTab = tab === "applications_sent";
+  const pagedApplications = applications.slice(
+    (page - 1) * LINES_PER_PAGE,
+    page * LINES_PER_PAGE
+  );
+
+  const totalPages = Math.max(
+    1,
+    Math.ceil((isApplicationsTab ? applications.length : filtered.length) / LINES_PER_PAGE)
+  );
   const paged = filtered.slice((page - 1) * LINES_PER_PAGE, page * LINES_PER_PAGE);
 
   return (
@@ -149,6 +191,73 @@ export function CreatorCollaborationsClient({
 
       <div className="mt-4 overflow-hidden rounded-2xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
         <div className="overflow-x-auto">
+          {isApplicationsTab ? (
+            <table className="w-full min-w-[600px] text-left text-sm">
+              <thead>
+                <tr className="border-b border-zinc-200 text-xs font-medium text-zinc-500 dark:border-zinc-800">
+                  <th className="px-5 py-3">Brand</th>
+                  <th className="px-5 py-3">Campaign</th>
+                  <th className="px-5 py-3">Status</th>
+                  <th className="px-5 py-3">Applied on</th>
+                  <th className="px-5 py-3"></th>
+                </tr>
+              </thead>
+              <tbody>
+                {pagedApplications.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="px-5 py-10 text-center text-zinc-500">
+                      No applications yet. Apply to a campaign from
+                      Opportunities to see it here.
+                    </td>
+                  </tr>
+                ) : (
+                  pagedApplications.map((a) => {
+                    const badge = APPLICATION_STATUS_BADGE[a.status];
+                    return (
+                      <tr
+                        key={a.id}
+                        className="border-b border-zinc-100 last:border-0 dark:border-zinc-900"
+                      >
+                        <td className="px-5 py-3 font-medium text-zinc-900 dark:text-zinc-50">
+                          {a.campaign?.brand?.company_name ?? "—"}
+                        </td>
+                        <td className="px-5 py-3 text-zinc-600 dark:text-zinc-400">
+                          {a.campaign?.name ?? "—"}
+                        </td>
+                        <td className="px-5 py-3">
+                          <span
+                            className={`rounded-full px-2.5 py-1 text-xs font-medium ${badge.className}`}
+                          >
+                            {badge.label}
+                          </span>
+                        </td>
+                        <td className="px-5 py-3 text-zinc-600 dark:text-zinc-400">
+                          {new Date(a.created_at).toLocaleDateString("en-US", {
+                            month: "short",
+                            day: "numeric",
+                          })}
+                        </td>
+                        <td className="px-5 py-3 text-right">
+                          {a.status === "accepted" && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setTab("needs_action");
+                                setPage(1);
+                              }}
+                              className="font-medium text-blue-600 hover:underline"
+                            >
+                              View invite →
+                            </button>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
+              </tbody>
+            </table>
+          ) : (
           <table className="w-full min-w-[800px] text-left text-sm">
             <thead>
               <tr className="border-b border-zinc-200 text-xs font-medium text-zinc-500 dark:border-zinc-800">
@@ -226,10 +335,14 @@ export function CreatorCollaborationsClient({
               )}
             </tbody>
           </table>
+          )}
         </div>
 
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-zinc-200 px-4 py-3 text-sm text-zinc-500 dark:border-zinc-800">
-          <span>{filtered.length} collaborations</span>
+          <span>
+            {isApplicationsTab ? applications.length : filtered.length}{" "}
+            {isApplicationsTab ? "applications" : "collaborations"}
+          </span>
           <div className="flex items-center gap-1">
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
               <button

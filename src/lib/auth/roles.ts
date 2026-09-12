@@ -87,7 +87,9 @@ export async function requireBrand() {
 
   const { data: brand, error: brandError } = await supabase
     .from("brands")
-    .select("id, company_name, industry, website, logo_url, wallet_balance")
+    .select(
+      "id, company_name, industry, website, logo_url, wallet_balance, marketplace_explored_at"
+    )
     .eq("id", activeBrandId)
     .single();
 

@@ -5,14 +5,7 @@ import { AuthSplitLayout } from "@/components/auth/AuthSplitLayout";
 import { CreatorCardPreview } from "@/components/auth/CreatorCardPreview";
 import { requireCreator } from "@/lib/auth/roles";
 import { completeOnboarding } from "../actions";
-
-// Naano's marketplace starts at €20/post; this scales with reach at roughly
-// €85 per 1,000 followers, which is the creator's starting point, not a
-// locked-in figure — they can edit it here or later from their profile.
-function recommendPrice(followers: number | null) {
-  if (!followers || followers <= 0) return 20;
-  return Math.max(20, Math.round(followers * 0.085));
-}
+import { recommendPrice } from "@/lib/price-recommendation";
 
 export default async function CreatorPriceStepPage({
   searchParams,

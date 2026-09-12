@@ -31,7 +31,15 @@ export async function GET(
   });
 
   const campaign = booking.campaign as unknown as { landing_url: string | null } | null;
-  const destination = campaign?.landing_url || new URL("/", request.url).toString();
 
-  return NextResponse.redirect(destination);
+  // Carries this click forward so the Pixel Naano snippet (if installed on
+  // the destination site) can attribute a later signup/purchase back to
+  // this exact booking — see /api/track and /api/n.js.
+  if (campaign?.landing_url) {
+    const destination = new URL(campaign.landing_url);
+    destination.searchParams.set("naano_ref", slug);
+    return NextResponse.redirect(destination.toString());
+  }
+
+  return NextResponse.redirect(new URL("/", request.url).toString());
 }

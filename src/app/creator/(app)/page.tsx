@@ -2,15 +2,14 @@ import Link from "next/link";
 import {
   ArrowUpRight,
   ChevronRight,
-  ClipboardCopy,
   Eye,
   FileText,
   IdCard,
-  Share2,
   Users2,
 } from "lucide-react";
 import { requireCreator } from "@/lib/auth/roles";
 import { CreatorCardPreview } from "@/components/auth/CreatorCardPreview";
+import { CreatorCardShareButtons } from "@/components/dashboard/CreatorCardShareButtons";
 import { avatarColor } from "@/lib/avatar-color";
 import { computeCampaignMatch, MATCH_TIER_LABEL } from "@/lib/campaign-match";
 
@@ -203,20 +202,10 @@ export default async function CreatorOverviewPage() {
                 <IdCard className="h-3.5 w-3.5" />
                 Open card
               </Link>
-              <button
-                type="button"
-                className="flex items-center justify-center gap-1.5 rounded-full border border-zinc-200 px-3.5 py-2 text-xs font-semibold text-zinc-700 hover:bg-zinc-50 dark:border-zinc-800 dark:text-zinc-300"
-              >
-                <ClipboardCopy className="h-3.5 w-3.5" />
-                Copy card link
-              </button>
-              <button
-                type="button"
-                className="flex items-center justify-center gap-1.5 rounded-full bg-blue-600 px-3.5 py-2 text-xs font-semibold text-white hover:bg-blue-700"
-              >
-                <Share2 className="h-3.5 w-3.5" />
-                Share my card
-              </button>
+              <CreatorCardShareButtons
+                creatorId={creatorRow.id}
+                creatorName={creatorRow.name}
+              />
             </div>
           </div>
 

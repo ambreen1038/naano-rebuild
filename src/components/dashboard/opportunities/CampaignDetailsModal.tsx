@@ -136,8 +136,9 @@ export function CampaignDetailsModal({
         </div>
 
         <p className="mt-3 text-xs text-zinc-500">
-          Your net is held in escrow when the brand accepts, and released at
-          publication.
+          If the brand accepts your application, you&apos;ll get a booking
+          invite at your listed rate — from there you can accept, decline,
+          or negotiate it like any other invite.
         </p>
 
         <details className="group mt-3 rounded-xl border border-zinc-100 dark:border-zinc-900">

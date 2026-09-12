@@ -2,6 +2,7 @@ import { Sidebar } from "@/components/dashboard/Sidebar";
 import { Topbar } from "@/components/dashboard/Topbar";
 import { PortalShell } from "@/components/dashboard/PortalShell";
 import { requireBrand } from "@/lib/auth/roles";
+import { getLaunchPlanStatus } from "@/lib/launch-plan";
 
 export default async function BrandLayout({
   children,
@@ -20,6 +21,10 @@ export default async function BrandLayout({
     .order("created_at", { ascending: true });
 
   const companyName = brand.company_name || user.email || "Your company";
+  const launchPlan = await getLaunchPlanStatus(
+    supabase,
+    brand.marketplace_explored_at
+  );
 
   return (
     <PortalShell
@@ -36,6 +41,9 @@ export default async function BrandLayout({
           email={user.email ?? ""}
           walletBalance={Number(brand.wallet_balance ?? 0)}
           settingsHref="/brand/settings"
+          walletHref="/brand/billing"
+          creatorsHref="/brand/creators"
+          launchPlan={launchPlan}
         />
       }
     >

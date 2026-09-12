@@ -11,7 +11,7 @@ const TABS = [
 
 const EMPTY_MESSAGE: Record<(typeof TABS)[number]["value"], string> = {
   all: "No invoices or entries yet.",
-  top_up: "No top-ups yet, your Stripe top-up will create its invoice.",
+  top_up: "No top-ups yet, adding a demo top-up above will create its invoice.",
   booking: "No booking entries yet.",
 };
 

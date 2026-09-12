@@ -37,6 +37,19 @@ export default async function CreatorsPage() {
     );
   }
 
+  // Real, one-time signal for the "Discover the Marketplace" Launch Plan
+  // step (see supabase/migrations/0019_launch_plan.sql) — recorded the
+  // first time this page actually loads for the brand, regardless of how
+  // they got here (Launch Plan CTA or the sidebar). The `.is(...)` guard
+  // makes this idempotent, so it's safe to run on every visit.
+  if (!brand.marketplace_explored_at) {
+    await supabase
+      .from("brands")
+      .update({ marketplace_explored_at: new Date().toISOString() })
+      .eq("id", brand.id)
+      .is("marketplace_explored_at", null);
+  }
+
   // MOCK_CREATORS (src/lib/mock-creators.ts) is test-only data standing in
   // for a fuller marketplace while real signups are still sparse — kept in
   // its own file, never referenced by any UI component directly, so it can

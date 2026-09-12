@@ -100,7 +100,7 @@ export function BillingBalanceCard({
             <div className="flex items-start justify-between">
               <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-blue-600">
                 <Lock className="h-3.5 w-3.5" />
-                Secure payment
+                Demo top-up
               </span>
               <button
                 type="button"
@@ -212,10 +212,11 @@ export function BillingBalanceCard({
                     <CreditCard className="mt-0.5 h-4 w-4 shrink-0 text-zinc-400" />
                     <span>
                       <strong className="text-zinc-900 dark:text-zinc-50">
-                        Card payment
+                        No real payment is processed
                       </strong>{" "}
-                      — entered only on Stripe&apos;s secure checkout (PCI
-                      DSS).
+                      — this credits your Naano balance directly for testing;
+                      no card details are collected and no payment processor
+                      is involved.
                     </span>
                   </p>
                   <p className="flex items-start gap-2">
@@ -231,9 +232,10 @@ export function BillingBalanceCard({
                     <Clock className="mt-0.5 h-4 w-4 shrink-0 text-zinc-400" />
                     <span>
                       <strong className="text-zinc-900 dark:text-zinc-50">
-                        Pay on delivery
+                        Not yet deducted automatically
                       </strong>{" "}
-                      — creators are charged only after the post is delivered.
+                      — booking a creator records the agreed price, but this
+                      balance isn&apos;t reduced by it yet.
                     </span>
                   </p>
                 </div>
@@ -254,7 +256,7 @@ export function BillingBalanceCard({
                 </button>
                 <p className="mt-2 flex items-center justify-center gap-1 text-xs text-zinc-400">
                   <Lock className="h-3 w-3" />
-                  End-to-end encrypted · powered by Stripe
+                  Demo top-up · no real charge is made
                 </p>
               </>
             )}

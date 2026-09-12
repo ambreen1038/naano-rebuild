@@ -4,10 +4,10 @@ import { Check, ChevronDown, Globe, ShieldCheck } from "lucide-react";
 import { LinkedinIcon } from "@/components/icons/LinkedinIcon";
 
 const NAV_LINKS = [
-  "For companies",
-  "For creators",
-  "For agencies",
-  "How it works",
+  { label: "For companies", href: "#marketplace" },
+  { label: "For creators", href: "/signup/creator" },
+  { label: "For agencies", href: "#case-study" },
+  { label: "How it works", href: "#how-it-works" },
 ];
 
 const LOGOS = ["Abyssale", "BlogSEO", "lemlist", "folk.", "LEADBAY", "ringover"];
@@ -132,6 +132,16 @@ const FAQS = [
   },
 ];
 
+// Only these three footer items have a real destination on this page today
+// (the rest — Blog, press mentions, legal pages, resource articles — don't
+// exist as pages, so they stay plain, non-interactive text rather than
+// links to somewhere that 404s).
+const FOOTER_ANCHORS: Record<string, string> = {
+  Features: "#marketplace",
+  Pricing: "#pricing",
+  FAQs: "#faq",
+};
+
 const FOOTER_COLUMNS = [
   {
     title: "Product",
@@ -183,17 +193,20 @@ export default function Home() {
           </Link>
           <nav className="ml-auto hidden items-center gap-6 lg:flex">
             {NAV_LINKS.map((l) => (
-              <span
-                key={l}
-                className="cursor-default text-sm font-medium text-zinc-700"
+              <Link
+                key={l.label}
+                href={l.href}
+                className="text-sm font-medium text-zinc-700 hover:text-zinc-900"
               >
-                {l}
-              </span>
+                {l.label}
+              </Link>
             ))}
-            <span className="flex cursor-default items-center gap-1 text-sm font-medium text-zinc-700">
+            <a
+              href="#faq"
+              className="text-sm font-medium text-zinc-700 hover:text-zinc-900"
+            >
               Resources
-              <ChevronDown className="h-3.5 w-3.5" />
-            </span>
+            </a>
           </nav>
           <span className="ml-auto flex items-center gap-1 text-xs font-medium text-zinc-600 lg:ml-0">
             <Globe className="h-3.5 w-3.5" />
@@ -244,9 +257,12 @@ export default function Home() {
             >
               Launch a campaign
             </Link>
-            <span className="cursor-default text-sm font-medium text-zinc-700">
+            <a
+              href="#how-it-works"
+              className="text-sm font-medium text-zinc-700 hover:text-zinc-900"
+            >
               See how Naano works →
-            </span>
+            </a>
           </div>
           <p className="mt-8 flex items-center justify-center gap-1.5 text-xs text-zinc-500">
             <ShieldCheck className="h-3.5 w-3.5" />
@@ -284,7 +300,7 @@ export default function Home() {
       </section>
 
       {/* -------------------------------------------------------- marketplace */}
-      <section className="px-6 py-24">
+      <section id="marketplace" className="scroll-mt-20 px-6 py-24">
         <div className="mx-auto max-w-6xl">
           <p className="text-sm font-medium text-blue-600">
             The Naano creator marketplace
@@ -311,7 +327,7 @@ export default function Home() {
       </section>
 
       {/* -------------------------------------------------------------- steps */}
-      <section className="bg-zinc-50 px-6 py-24">
+      <section id="how-it-works" className="scroll-mt-20 bg-zinc-50 px-6 py-24">
         <div className="mx-auto max-w-6xl">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-600">
             One platform, from brief to results
@@ -341,7 +357,7 @@ export default function Home() {
       </section>
 
       {/* ------------------------------------------------------- case study */}
-      <section className="px-6 py-24">
+      <section id="case-study" className="scroll-mt-20 px-6 py-24">
         <div className="mx-auto max-w-6xl">
           <h2 className="text-4xl font-bold tracking-tight text-zinc-900">
             Real teams. Measurable pipeline.
@@ -466,7 +482,7 @@ export default function Home() {
       </section>
 
       {/* ------------------------------------------------------------ pricing */}
-      <section className="bg-zinc-50 px-6 py-24">
+      <section id="pricing" className="scroll-mt-20 bg-zinc-50 px-6 py-24">
         <div className="mx-auto max-w-5xl text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-600">
             Get started
@@ -561,7 +577,7 @@ export default function Home() {
       </section>
 
       {/* ---------------------------------------------------------------- faq */}
-      <section className="px-6 py-24">
+      <section id="faq" className="scroll-mt-20 px-6 py-24">
         <div className="mx-auto max-w-3xl">
           <h2 className="text-center text-4xl font-bold tracking-tight text-zinc-900">
             Frequently asked questions.
@@ -673,14 +689,25 @@ export default function Home() {
                   {col.title}
                 </p>
                 <ul className="mt-3 flex flex-col gap-2">
-                  {col.links.map((l) => (
-                    <li
-                      key={l}
-                      className="cursor-default text-sm text-zinc-600 hover:text-zinc-900"
-                    >
-                      {l}
-                    </li>
-                  ))}
+                  {col.links.map((l) =>
+                    FOOTER_ANCHORS[l] ? (
+                      <li key={l}>
+                        <a
+                          href={FOOTER_ANCHORS[l]}
+                          className="text-sm text-zinc-600 hover:text-zinc-900"
+                        >
+                          {l}
+                        </a>
+                      </li>
+                    ) : (
+                      <li
+                        key={l}
+                        className="cursor-default text-sm text-zinc-600"
+                      >
+                        {l}
+                      </li>
+                    )
+                  )}
                 </ul>
               </div>
             ))}

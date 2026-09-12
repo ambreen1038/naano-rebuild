@@ -1,7 +1,22 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import { Bell, ChevronDown, CreditCard, Settings, Sun } from "lucide-react";
+import {
+  Bell,
+  CreditCard,
+  LayoutGrid,
+  LogOut,
+  Menu,
+  Phone,
+  Plug,
+  Settings,
+  UserPlus,
+} from "lucide-react";
 import { logout } from "@/app/actions";
+import { LaunchPlanWidget } from "@/components/dashboard/LaunchPlanWidget";
+import { useMobileSidebar } from "@/components/dashboard/PortalShell";
+import type { LaunchPlanStatus } from "@/lib/launch-plan";
 
 export function Topbar({
   companyName,
@@ -10,6 +25,11 @@ export function Topbar({
   avatarUrl,
   showGrowthPills = true,
   settingsHref,
+  walletHref,
+  creatorsHref,
+  integrationsHref,
+  tourHref,
+  launchPlan,
 }: {
   companyName: string;
   email: string;
@@ -17,26 +37,64 @@ export function Topbar({
   avatarUrl?: string | null;
   showGrowthPills?: boolean;
   settingsHref?: string;
+  /** Where the wallet balance pill links to (e.g. the Billing tab). Left
+   * unlinked if omitted, so callers with no such page keep the old
+   * plain-badge look. */
+  walletHref?: string;
+  /** Only the Brand Portal passes this — enables the "Invite Creators" /
+   * "Book a call" / "Integrations" items in the avatar menu, which have no
+   * Creator Portal equivalent. */
+  creatorsHref?: string;
+  /** Only the Creator Portal passes these two — its own "Integrations" /
+   * "Guided tour" items, distinct from the Brand Portal's menu. */
+  integrationsHref?: string;
+  tourHref?: string;
+  /** Only the Brand Portal passes this — real completion data for the
+   * "Get started" pill + Launch Plan modal. Omitted entirely (not just
+   * hidden) for the Creator Portal, which has no such checklist. */
+  launchPlan?: LaunchPlanStatus;
 }) {
   const initial = companyName.charAt(0).toUpperCase() || "?";
+  const { toggle } = useMobileSidebar();
 
   return (
-    <header className="flex h-16 shrink-0 items-center gap-3 border-b border-zinc-200 bg-white px-6 dark:border-zinc-800 dark:bg-zinc-950">
-      {/* Decorative only — not wired to a real MCP connector */}
+    <header className="flex h-16 shrink-0 items-center gap-3 border-b border-zinc-200 bg-white px-4 sm:px-6 dark:border-zinc-800 dark:bg-zinc-950">
+      <button
+        type="button"
+        onClick={toggle}
+        aria-label="Open menu"
+        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-100 lg:hidden dark:text-zinc-400 dark:hover:bg-zinc-900"
+      >
+        <Menu className="h-5 w-5" />
+      </button>
+
       {showGrowthPills && (
-        <span className="hidden items-center gap-1.5 rounded-full border border-zinc-200 px-3 py-1.5 text-xs font-medium text-zinc-500 sm:flex dark:border-zinc-800 dark:text-zinc-400">
+        <Link
+          href="/brand/settings?tab=Integrations"
+          className="hidden items-center gap-1.5 rounded-full border border-zinc-200 px-3 py-1.5 text-xs font-medium text-zinc-500 sm:flex dark:border-zinc-800 dark:text-zinc-400"
+        >
           <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
           NAANO MCP
           <span className="text-zinc-300 dark:text-zinc-700">/</span>
           Connect
-        </span>
+        </Link>
       )}
 
       <div className="ml-auto flex items-center gap-2">
-        <span className="flex items-center gap-1.5 rounded-full border border-zinc-200 px-3 py-1.5 text-sm font-medium text-zinc-700 dark:border-zinc-800 dark:text-zinc-300">
-          <CreditCard className="h-3.5 w-3.5 text-zinc-400" />€
-          {walletBalance.toFixed(2)}
-        </span>
+        {walletHref ? (
+          <Link
+            href={walletHref}
+            className="flex items-center gap-1.5 rounded-full border border-zinc-200 px-3 py-1.5 text-sm font-medium text-zinc-700 hover:bg-zinc-50 dark:border-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-900"
+          >
+            <CreditCard className="h-3.5 w-3.5 text-zinc-400" />€
+            {walletBalance.toFixed(2)}
+          </Link>
+        ) : (
+          <span className="flex items-center gap-1.5 rounded-full border border-zinc-200 px-3 py-1.5 text-sm font-medium text-zinc-700 dark:border-zinc-800 dark:text-zinc-300">
+            <CreditCard className="h-3.5 w-3.5 text-zinc-400" />€
+            {walletBalance.toFixed(2)}
+          </span>
+        )}
 
         {/* Decorative only — no localization implemented */}
         <div className="hidden overflow-hidden rounded-full border border-zinc-200 text-xs font-medium sm:flex dark:border-zinc-800">
@@ -46,23 +104,12 @@ export function Topbar({
           <span className="px-2.5 py-1.5 text-zinc-400">FR</span>
         </div>
 
-        {/* Decorative only — not wired to real onboarding progress yet */}
-        {showGrowthPills && (
-          <span className="hidden items-center gap-2 rounded-full border border-zinc-200 py-1.5 pl-3 pr-2 lg:flex dark:border-zinc-800">
-            <Sun className="h-4 w-4 shrink-0 text-amber-400" />
-            <span className="leading-tight">
-              <span className="block text-[10px] font-semibold uppercase tracking-wide text-zinc-400">
-                Get started
-              </span>
-              <span className="block max-w-[120px] truncate text-xs font-medium text-zinc-700 dark:text-zinc-300">
-                Discover the Marketplace
-              </span>
-            </span>
-            <span className="rounded-full bg-zinc-100 px-1.5 py-0.5 text-[11px] font-medium text-zinc-500 dark:bg-zinc-900">
-              1/3
-            </span>
-            <ChevronDown className="h-3.5 w-3.5 shrink-0 text-zinc-400" />
-          </span>
+        {launchPlan && (
+          <LaunchPlanWidget
+            steps={launchPlan.steps}
+            completedCount={launchPlan.completedCount}
+            totalCount={launchPlan.totalCount}
+          />
         )}
 
         {/* Badge count is decorative — no real notifications system yet */}
@@ -78,7 +125,10 @@ export function Topbar({
         </button>
 
         <details className="relative">
-          <summary className="relative flex h-9 w-9 cursor-pointer list-none items-center justify-center overflow-hidden rounded-full bg-zinc-900 text-sm font-semibold text-white [&::-webkit-details-marker]:hidden dark:bg-zinc-50 dark:text-zinc-900">
+          <summary
+            title={email}
+            className="relative flex h-9 w-9 cursor-pointer list-none items-center justify-center overflow-hidden rounded-full bg-zinc-900 text-sm font-semibold text-white [&::-webkit-details-marker]:hidden dark:bg-zinc-50 dark:text-zinc-900"
+          >
             {avatarUrl ? (
               <Image
                 src={avatarUrl}
@@ -93,27 +143,63 @@ export function Topbar({
             <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-green-500 dark:border-zinc-950" />
           </summary>
           <div className="absolute right-0 top-11 z-10 w-56 rounded-xl border border-zinc-200 bg-white p-2 shadow-lg dark:border-zinc-800 dark:bg-zinc-950">
-            <div className="px-2 py-1.5">
-              <p className="truncate text-sm font-medium text-zinc-900 dark:text-zinc-50">
-                {companyName}
-              </p>
-              <p className="truncate text-xs text-zinc-500">{email}</p>
-            </div>
+            {creatorsHref && (
+              <>
+                <Link
+                  href={creatorsHref}
+                  className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-900"
+                >
+                  <UserPlus className="h-4 w-4" />
+                  Invite Creators
+                </Link>
+                {/* Decorative only — no real call-scheduling integration exists */}
+                <span className="flex w-full cursor-not-allowed items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm text-zinc-400 dark:text-zinc-600">
+                  <Phone className="h-4 w-4" />
+                  Book a call
+                </span>
+                <Link
+                  href="/brand/settings?tab=Integrations"
+                  className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-900"
+                >
+                  <Plug className="h-4 w-4" />
+                  Integrations
+                </Link>
+              </>
+            )}
+            {integrationsHref && (
+              <Link
+                href={integrationsHref}
+                className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-900"
+              >
+                <Plug className="h-4 w-4" />
+                Integrations
+              </Link>
+            )}
             {settingsHref && (
               <Link
                 href={settingsHref}
-                className="mt-1 flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-900"
+                className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-900"
               >
                 <Settings className="h-4 w-4" />
                 Settings
               </Link>
             )}
-            <form action={logout}>
+            {tourHref && (
+              <Link
+                href={tourHref}
+                className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-900"
+              >
+                <LayoutGrid className="h-4 w-4" />
+                Guided tour
+              </Link>
+            )}
+            <form action={logout} className="mt-1 border-t border-zinc-100 pt-1 dark:border-zinc-900">
               <button
                 type="submit"
-                className="mt-1 w-full rounded-lg px-2 py-1.5 text-left text-sm text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-900"
+                className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm text-zinc-600 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-900"
               >
-                Log out
+                <LogOut className="h-4 w-4" />
+                Sign out
               </button>
             </form>
           </div>

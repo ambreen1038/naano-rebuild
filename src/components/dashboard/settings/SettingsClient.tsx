@@ -1,8 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { ChevronDown, Fingerprint, Loader2, X } from "lucide-react";
 import { updateBrandSettings, rescanWebsite } from "@/app/brand/settings/actions";
+import { IntegrationsPanel, type IntegrationsInfo } from "./IntegrationsPanel";
+import { SETTINGS_TABS, type SettingsTab } from "@/lib/settings-tabs";
 
 const INDUSTRIES: { value: string; label: string }[] = [
   { value: "sales-tech", label: "Sales Tech" },
@@ -17,9 +20,6 @@ const INDUSTRIES: { value: string; label: string }[] = [
 ];
 
 const COMPANY_SIZES = ["1-10", "11-50", "51-200", "201-1000", "1000+"] as const;
-
-const SETTINGS_TABS = ["Profile", "Audience", "Team & access", "Integrations"] as const;
-type SettingsTab = (typeof SETTINGS_TABS)[number];
 
 export type BrandSettings = {
   id: string;
@@ -110,8 +110,19 @@ function ChipListEditor({
 const inputClass =
   "w-full rounded-lg border border-zinc-300 px-3 py-2.5 text-sm text-zinc-900 outline-none focus:border-blue-500 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50";
 
-export function SettingsClient({ brand }: { brand: BrandSettings }) {
-  const [tab, setTab] = useState<SettingsTab>("Profile");
+export function SettingsClient({
+  brand,
+  initialTab,
+  integrations,
+}: {
+  brand: BrandSettings;
+  initialTab: SettingsTab;
+  integrations: IntegrationsInfo;
+}) {
+  // Driven entirely by the URL (?tab=) via <Link>, not local state — so a
+  // direct link, refresh, or the browser's back/forward button all land on
+  // the correct tab, same as page.tsx re-resolves it server-side.
+  const tab = initialTab;
   const [industry, setIndustry] = useState(brand.industry ?? "other");
   const [editingIndustry, setEditingIndustry] = useState(false);
   const [companySize, setCompanySize] = useState(brand.company_size);
@@ -172,10 +183,9 @@ export function SettingsClient({ brand }: { brand: BrandSettings }) {
       <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[200px_1fr]">
         <div className="flex flex-row gap-1 overflow-x-auto lg:flex-col">
           {SETTINGS_TABS.map((t) => (
-            <button
+            <Link
               key={t}
-              type="button"
-              onClick={() => setTab(t)}
+              href={t === "Profile" ? "/brand/settings" : `/brand/settings?tab=${encodeURIComponent(t)}`}
               className={`shrink-0 rounded-lg px-3 py-2 text-left text-sm font-medium ${
                 tab === t
                   ? "bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-300"
@@ -183,11 +193,13 @@ export function SettingsClient({ brand }: { brand: BrandSettings }) {
               }`}
             >
               {t}
-            </button>
+            </Link>
           ))}
         </div>
 
-        {tab !== "Profile" ? (
+        {tab === "Integrations" ? (
+          <IntegrationsPanel info={integrations} />
+        ) : tab !== "Profile" ? (
           <div className="rounded-2xl border border-dashed border-zinc-200 p-10 text-center text-sm text-zinc-500 dark:border-zinc-800">
             {tab} isn&apos;t built yet.
           </div>

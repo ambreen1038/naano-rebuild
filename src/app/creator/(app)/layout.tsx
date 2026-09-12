@@ -43,6 +43,10 @@ export default async function CreatorAppLayout({
           walletBalance={Number(walletRow?.wallet_balance ?? 0)}
           avatarUrl={creator?.avatar_url}
           showGrowthPills={false}
+          walletHref="/creator/earnings"
+          settingsHref="/creator/settings"
+          integrationsHref="/creator/integrations"
+          tourHref="/creator/tour"
         />
       }
     >

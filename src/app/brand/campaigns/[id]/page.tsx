@@ -1,6 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { CampaignActions } from "@/components/dashboard/campaigns/CampaignActions";
+
+const STATUS_STYLES: Record<string, string> = {
+  active: "bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400",
+  draft: "bg-zinc-100 text-zinc-600 dark:bg-zinc-900 dark:text-zinc-400",
+  completed: "bg-blue-50 text-blue-700 dark:bg-blue-950 dark:text-blue-400",
+};
 
 export default async function CampaignDetailPage({
   params,
@@ -13,7 +20,7 @@ export default async function CampaignDetailPage({
   const { data: campaign } = await supabase
     .from("campaigns")
     .select(
-      "id, name, objective, creator_guidelines, target_vertical, budget, landing_url, status, created_at"
+      "id, name, objective, key_messages, creator_guidelines, target_vertical, budget, landing_url, status, created_at"
     )
     .eq("id", id)
     .single();
@@ -34,10 +41,16 @@ export default async function CampaignDetailPage({
         <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
           {campaign.name}
         </h1>
-        <span className="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-medium capitalize text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400">
+        <span
+          className={`rounded-full px-2.5 py-1 text-xs font-medium capitalize ${
+            STATUS_STYLES[campaign.status] ?? STATUS_STYLES.draft
+          }`}
+        >
           {campaign.status}
         </span>
       </div>
+
+      <CampaignActions campaignId={campaign.id} status={campaign.status} />
 
       <div className="mt-6 rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-950">
         <h2 className="text-sm font-semibold text-zinc-500">
@@ -46,6 +59,17 @@ export default async function CampaignDetailPage({
         <p className="mt-1 text-sm text-zinc-900 dark:text-zinc-50">
           {campaign.objective}
         </p>
+
+        {campaign.key_messages && (
+          <>
+            <h2 className="mt-4 text-sm font-semibold text-zinc-500">
+              Key messages
+            </h2>
+            <p className="mt-1 text-sm text-zinc-900 dark:text-zinc-50">
+              {campaign.key_messages}
+            </p>
+          </>
+        )}
 
         {campaign.creator_guidelines && (
           <>
@@ -81,8 +105,15 @@ export default async function CampaignDetailPage({
       </div>
 
       <p className="mt-6 text-sm text-zinc-500">
-        Booking creators into this campaign happens from the Collaborations
-        tab — coming next.
+        Booking creators into this campaign happens from the{" "}
+        <Link href="/brand/creators" className="font-medium text-blue-600 hover:underline">
+          Creators
+        </Link>{" "}
+        tab; track progress from{" "}
+        <Link href="/brand/collaborations" className="font-medium text-blue-600 hover:underline">
+          Collaborations
+        </Link>
+        .
       </p>
     </div>
   );

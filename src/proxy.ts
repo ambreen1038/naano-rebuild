@@ -37,8 +37,11 @@ export async function proxy(request: NextRequest) {
     request.nextUrl.pathname.startsWith("/creator");
 
   if (!user && isProtected) {
+    const originalPath = request.nextUrl.pathname + request.nextUrl.search;
     const url = request.nextUrl.clone();
     url.pathname = "/login";
+    url.search = "";
+    url.searchParams.set("next", originalPath);
     const redirectResponse = NextResponse.redirect(url);
     // Carry over any cookies Supabase refreshed above. Returning a fresh
     // response here would drop the rotated tokens, so the next request would

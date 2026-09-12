@@ -10,9 +10,9 @@ const inputClass =
 export default async function LoginPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string; message?: string }>;
+  searchParams: Promise<{ error?: string; message?: string; next?: string }>;
 }) {
-  const { error, message } = await searchParams;
+  const { error, message, next } = await searchParams;
 
   return (
     <AuthSplitLayout
@@ -55,6 +55,7 @@ export default async function LoginPage({
       </div>
 
       <form action={login} className="mt-6 flex flex-col gap-4">
+        {next && <input type="hidden" name="next" value={next} />}
         <label className="flex flex-col gap-1.5 text-xs font-semibold uppercase tracking-wide text-zinc-500">
           Email
           <input

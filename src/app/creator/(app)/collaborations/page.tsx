@@ -13,6 +13,13 @@ type RawBookingRow = {
   campaign: { name: string; brand: { company_name: string | null } | null } | null;
 };
 
+type RawApplicationRow = {
+  id: string;
+  status: "pending" | "accepted" | "declined" | "withdrawn";
+  created_at: string;
+  campaign: { name: string; brand: { company_name: string | null } | null } | null;
+};
+
 export default async function CreatorCollaborationsPage() {
   const { supabase, user } = await requireCreator();
 
@@ -56,17 +63,27 @@ export default async function CreatorCollaborationsPage() {
   const rawBookings = (bookingsData ?? []) as unknown as RawBookingRow[];
   const bookingIds = rawBookings.map((b) => b.id);
 
-  const [{ data: clickRows }, { data: offerRows }] = await Promise.all([
-    bookingIds.length
-      ? supabase.from("click_events").select("booking_id").in("booking_id", bookingIds)
-      : Promise.resolve({ data: [] as { booking_id: string }[] }),
-    bookingIds.length
-      ? supabase
-          .from("booking_offers")
-          .select("id, booking_id, offered_by, amount, message, status, created_at")
-          .in("booking_id", bookingIds)
-      : Promise.resolve({ data: [] as (OfferRow & { booking_id: string })[] }),
-  ]);
+  const [{ data: clickRows }, { data: offerRows }, { data: applicationsData }] =
+    await Promise.all([
+      bookingIds.length
+        ? supabase.from("click_events").select("booking_id").in("booking_id", bookingIds)
+        : Promise.resolve({ data: [] as { booking_id: string }[] }),
+      bookingIds.length
+        ? supabase
+            .from("booking_offers")
+            .select("id, booking_id, offered_by, amount, message, status, created_at")
+            .in("booking_id", bookingIds)
+        : Promise.resolve({ data: [] as (OfferRow & { booking_id: string })[] }),
+      // Creator-initiated Opportunities applications (migration 0014) — a
+      // real, separate data source from bookings, surfaced here so the
+      // "Applications sent" tab reflects what a creator actually applied
+      // to instead of always showing zero.
+      supabase
+        .from("campaign_applications")
+        .select("id, status, created_at, campaign:campaigns(name, brand:brands(company_name))")
+        .eq("creator_id", creator.id)
+        .order("created_at", { ascending: false }),
+    ]);
 
   const clickCounts = new Map<string, number>();
   for (const c of clickRows ?? []) {
@@ -86,5 +103,7 @@ export default async function CreatorCollaborationsPage() {
     offers: offersByBooking.get(b.id) ?? [],
   }));
 
-  return <CreatorCollaborationsClient bookings={bookings} />;
+  const applications = (applicationsData ?? []) as unknown as RawApplicationRow[];
+
+  return <CreatorCollaborationsClient bookings={bookings} applications={applications} />;
 }
