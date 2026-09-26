@@ -1,6 +1,6 @@
-# Creator Marketplace (Naano rebuild)
+# CreatorLink
 
-A 24-hour rebuild of a B2B LinkedIn creator marketplace, inspired by [naano.com](https://naano.com), built with Next.js and Supabase. **This is an independent portfolio project. It is not affiliated with, or endorsed by, Naano.**
+A 24-hour rebuild of a B2B creator marketplace, inspired by [naano.com](https://naano.com), built with Next.js and Supabase. **This is an independent portfolio project that uses sample data. It is not affiliated with, or endorsed by, Naano or any other company.** The product name, logo and marketing copy are my own; the original site's customer logos, testimonials and statistics are not used.
 
 **Live demo:** https://naano-rebuild-final.vercel.app/
 
