@@ -6,24 +6,21 @@ import { LinkedinIcon } from "@/components/icons/LinkedinIcon";
 const NAV_LINKS = [
   { label: "For companies", href: "#marketplace" },
   { label: "For creators", href: "/signup/creator" },
-  { label: "For agencies", href: "#case-study" },
   { label: "How it works", href: "#how-it-works" },
 ];
 
-const LOGOS = ["Abyssale", "BlogSEO", "lemlist", "folk.", "LEADBAY", "ringover"];
-
 const MARKETPLACE_STATS = [
   {
-    value: "3,000+ vetted creators",
-    label: "Specialist B2B voices, ready to collaborate.",
+    value: "Browse by vertical",
+    label: "Filter creators by industry, audience size and price per post.",
   },
   {
-    value: "Across 100 countries",
-    label: "Local expertise with genuinely global reach.",
+    value: "Compare audience fit",
+    label: "See who reaches your buyers before you book.",
   },
   {
-    value: "Matched to your buyers",
-    label: "Audience fit comes before follower count.",
+    value: "Book in one place",
+    label: "Send a brief, agree a price and track the collaboration.",
   },
 ];
 
@@ -31,7 +28,7 @@ const STEPS = [
   {
     n: "01",
     title: "Find creators your buyers trust",
-    body: "Compare audience fit, verified performance and price per post — then shortlist in minutes.",
+    body: "Compare audience fit and price per post — then shortlist in minutes.",
   },
   {
     n: "02",
@@ -50,47 +47,40 @@ const STEPS = [
   },
   {
     n: "05",
-    title: "Pay creators without the admin",
-    body: "Contracts, invoices and payouts handled for you — creators are paid after delivery.",
+    title: "Track payouts without the admin",
+    body: "Follow contracts, invoices and payout status for every collaboration (simulated in this demo).",
   },
-];
-
-const RESULTS = [
-  { value: "5M+", label: "Impressions generated" },
-  { value: "30K+", label: "Leads generated" },
-  { value: "2,000+", label: "Creators on Naano" },
-  { value: "5K+", label: "Posts published" },
 ];
 
 const CREATOR_POSTS = [
   {
-    name: "Thomas Higadère",
-    meta: "Creator · B2B & AI · 34K followers",
-    post: "How AI changed our prospecting workflow for wealth managers and private bankers.",
+    name: "Alex Morgan",
+    meta: "Sample creator · B2B & AI · 34K followers",
+    post: "How we rebuilt our prospecting workflow around a shared AI assistant.",
     impressions: "42.8K",
     clicks: "312",
     leads: "18",
   },
   {
-    name: "Robin Tempe",
-    meta: "Creator · Sales & AI · 12K followers",
-    post: "I run my entire prospecting workflow through an AI. Here is how.",
+    name: "Sam Rivera",
+    meta: "Sample creator · Sales · 12K followers",
+    post: "Three questions I ask before I add a lead to any outreach sequence.",
     impressions: "9K",
     clicks: "100",
     leads: "50",
   },
   {
-    name: "Eric Djavid",
-    meta: "Sales Leader · B2B · 40K followers",
-    post: "Most sales teams spend 80% of their time on the wrong leads. Here is how I changed that.",
+    name: "Jordan Lee",
+    meta: "Sample creator · B2B · 40K followers",
+    post: "Why most sales teams spend their time on the wrong accounts.",
     impressions: "20K",
     clicks: "350",
     leads: "80",
   },
   {
-    name: "Marina Panova",
-    meta: "Content Creator · B2B · 34K followers",
-    post: "How I build my 30-day LinkedIn content system, the exact playbook.",
+    name: "Taylor Brooks",
+    meta: "Sample creator · Content · 34K followers",
+    post: "A simple 30-day content system for a B2B founder.",
     impressions: "100K",
     clicks: "1,600",
     leads: "320",
@@ -99,43 +89,32 @@ const CREATOR_POSTS = [
 
 const FAQS = [
   {
-    q: "What is Naano?",
-    a: "Naano is a B2B LinkedIn creator marketplace: companies discover and book vetted creators for sponsored LinkedIn campaigns, each at a fixed price per post set by the creator. The marketplace spans creators from niche voices with around 1,000 followers to established B2B creators with audiences of several hundred thousand.",
+    q: "What is CreatorLink?",
+    a: "CreatorLink is a portfolio project: a marketplace where brands find creators, run campaigns and track results. It uses sample data and is not a real business.",
   },
   {
-    q: "How does Naano find the right creators?",
-    a: "Creators are curated by vertical — sales, RevOps, devtools, HR-tech, product, marketing and more — and ranked by audience fit against your buyers first, then refined with verified performance statistics. A creator with 3,000 followers in your exact vertical often outperforms a 100,000-follower generalist.",
+    q: "Is this a real product?",
+    a: "No. It is an independent project built to show full-stack skills with Next.js and Supabase. It is not affiliated with any company.",
   },
   {
-    q: "Which networks do you support?",
-    a: "LinkedIn is the core of the marketplace, where B2B buying attention actually sits. Some campaigns extend to X (Twitter) when a creator's audience is there too.",
+    q: "How are creators matched?",
+    a: "The demo ranks creators by industry fit and audience relevance, and can use an AI model (Google Gemini) to suggest matches based on a brand's website.",
   },
   {
     q: "How does per-post pricing work?",
-    a: "Each creator sets a flat fee per sponsored post, starting from around €20 and rising with audience size and vertical scarcity. You see the price before you book — no cost per click, no impression-based billing, no retainer.",
+    a: "Each creator sets a flat price per sponsored post, and the price is shown before a booking is made.",
   },
   {
     q: "How does attribution work?",
-    a: "Every booking gets its own tracked link. When someone clicks through from a creator's post, that click is attributed back to the creator and campaign, so you can see qualified clicks, engaged companies and pipeline per post rather than guessing.",
+    a: "Every booking gets its own tracked link. Clicks are recorded on the server and attributed to the creator and campaign.",
   },
   {
-    q: "Do you handle creator payouts?",
-    a: "Yes. Approve content and pay every creator in one click, securely via Stripe Connect — invoices and approvals are handled for you.",
-  },
-  {
-    q: "What's the difference between Free and Done for you?",
-    a: "Self-Serve is €0/month: you get the marketplace, brief creation, tracking and payouts, and you run campaigns in-house. Managed means Naano operates your creator channel end to end — sourcing, briefs, launch, reporting and optimisation.",
-  },
-  {
-    q: "Can I upgrade or cancel anytime?",
-    a: "Yes. There's no lock-in — campaign spend is separate from the platform, and you can upgrade or cancel whenever you want.",
+    q: "Do payouts and billing work?",
+    a: "No. Wallet balances, invoices and payouts are simulated in this demo, and no real payment processor is connected.",
   },
 ];
 
-// Only these three footer items have a real destination on this page today
-// (the rest — Blog, press mentions, legal pages, resource articles — don't
-// exist as pages, so they stay plain, non-interactive text rather than
-// links to somewhere that 404s).
+// Only the product items link to an anchor on this page; the rest are plain text.
 const FOOTER_ANCHORS: Record<string, string> = {
   Features: "#marketplace",
   Pricing: "#pricing",
@@ -145,25 +124,11 @@ const FOOTER_ANCHORS: Record<string, string> = {
 const FOOTER_COLUMNS = [
   {
     title: "Product",
-    links: ["Features", "Pricing", "FAQs", "Blog", "Reports & benchmarks", "About"],
+    links: ["Features", "Pricing", "FAQs"],
   },
   {
-    title: "Company",
-    links: ["Help Center", "Privacy", "Terms of Sale & Use", "llms.txt", "pricing.md", "Reports & data"],
-  },
-  {
-    title: "Press",
-    links: ["Interview Thomas Marcelle, Xymag.tv", "Naano on FounderTrace", "Naano on TechnicalBeep"],
-  },
-  {
-    title: "Resources",
-    links: [
-      "LinkedIn creator marketplace",
-      "Best B2B influencer platforms 2026",
-      "B2B influencer marketing cost",
-      "Creator-led growth for B2B",
-      "How to pay B2B creators",
-    ],
+    title: "About this project",
+    links: ["Portfolio project", "Sample data only", "Not affiliated with any company"],
   },
 ];
 
@@ -178,18 +143,21 @@ function Avatar({ name }: { name: string }) {
 export default function Home() {
   return (
     <div className="flex flex-1 flex-col bg-white">
+      <div className="bg-zinc-900 px-6 py-2 text-center text-xs text-zinc-200">
+        Portfolio project with sample data. Not affiliated with any company.
+      </div>
       {/* ---------------------------------------------------------------- nav */}
       <header className="sticky top-0 z-30 border-b border-white/40 bg-sky-100/80 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center gap-6 px-6 py-3">
           <Link href="/" className="flex items-center gap-2">
             <Image
-              src="/naano-logomark.png"
-              alt="Naano"
+              src="/creatorlink-mark.svg" unoptimized
+              alt="CreatorLink"
               width={30}
               height={23}
               className="object-contain"
             />
-            <span className="text-lg font-semibold text-zinc-900">naano</span>
+            <span className="text-lg font-semibold text-zinc-900">creatorlink</span>
           </Link>
           <nav className="ml-auto hidden items-center gap-6 lg:flex">
             {NAV_LINKS.map((l) => (
@@ -229,8 +197,7 @@ export default function Home() {
 
       {/* -------------------------------------------------------------- hero */}
       <section className="relative overflow-hidden bg-[linear-gradient(to_bottom,#b9e0f5_0%,#d8eefb_30%,#f2f9fd_70%,#ffffff_100%)] px-6 pb-16 pt-20 text-center">
-        {/* Soft cloud layering — the real site uses licensed cloud
-            photography; this is a CSS approximation of the same feel. */}
+        {/* Soft cloud layering using CSS gradients. */}
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 [background:radial-gradient(38%_30%_at_12%_42%,rgba(255,255,255,0.95)_0%,transparent_70%),radial-gradient(30%_24%_at_32%_18%,rgba(255,255,255,0.85)_0%,transparent_72%),radial-gradient(34%_26%_at_72%_28%,rgba(255,255,255,0.9)_0%,transparent_70%),radial-gradient(28%_22%_at_90%_52%,rgba(255,255,255,0.8)_0%,transparent_72%),radial-gradient(75%_40%_at_50%_92%,rgba(255,255,255,1)_0%,transparent_70%)]"
@@ -238,17 +205,16 @@ export default function Home() {
         <div className="relative mx-auto max-w-3xl">
           <span className="inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1.5 text-xs font-medium text-zinc-700 shadow-sm">
             <LinkedinIcon className="h-3.5 w-3.5 text-blue-600" />
-            Where B2B brands work with creators
+            Portfolio project · sample data
           </span>
           <h1 className="mt-8 text-5xl font-bold leading-[1.05] tracking-tight text-zinc-900 sm:text-6xl">
-            The B2B LinkedIn
+            A marketplace for
             <br />
-            Creator Marketplace.
+            B2B creator campaigns.
           </h1>
           <p className="mx-auto mt-6 max-w-xl text-lg text-zinc-600">
-            Find the creators your buyers already trust, launch campaigns in
-            days, and track the clicks, leads and pipeline generated by every
-            post.
+            Find creators who reach your buyers, launch campaigns in days, and
+            track the clicks and leads from every post.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
@@ -261,52 +227,25 @@ export default function Home() {
               href="#how-it-works"
               className="text-sm font-medium text-zinc-700 hover:text-zinc-900"
             >
-              See how Naano works →
+              See how CreatorLink works →
             </a>
           </div>
           <p className="mt-8 flex items-center justify-center gap-1.5 text-xs text-zinc-500">
             <ShieldCheck className="h-3.5 w-3.5" />
-            Trusted by modern B2B teams
+            Sample data. Not a real business.
           </p>
         </div>
 
-        <div className="relative mx-auto mt-10 flex max-w-5xl flex-wrap items-center justify-center gap-x-10 gap-y-4">
-          {LOGOS.map((l) => (
-            <span
-              key={l}
-              className="text-lg font-semibold text-zinc-400 grayscale"
-            >
-              {l}
-            </span>
-          ))}
-        </div>
-      </section>
-
-      {/* ------------------------------------------------------- testimonial */}
-      <section className="bg-zinc-50 px-6 py-24 text-center">
-        <p className="text-sm font-medium uppercase tracking-[0.2em] text-zinc-400">
-          Zmirov Communication
-        </p>
-        <blockquote className="mx-auto mt-8 max-w-3xl text-3xl font-semibold leading-snug tracking-tight text-zinc-900 sm:text-4xl">
-          &ldquo;We manage €10M+ of influence budget every year. For B2B, Naano
-          simply makes our life easier&rdquo;
-        </blockquote>
-        <div className="mt-10 flex flex-col items-center gap-2">
-          <Avatar name="David Zmirov" />
-          <p className="text-sm font-semibold text-zinc-900">David Zmirov</p>
-          <p className="text-sm text-zinc-500">CEO, Zmirov Communication</p>
-          <p className="text-xs text-zinc-400">Influence agency</p>
-        </div>
       </section>
 
       {/* -------------------------------------------------------- marketplace */}
       <section id="marketplace" className="scroll-mt-20 px-6 py-24">
         <div className="mx-auto max-w-6xl">
           <p className="text-sm font-medium text-blue-600">
-            The Naano creator marketplace
+            The CreatorLink creator marketplace
           </p>
           <h2 className="mt-3 max-w-2xl text-4xl font-bold tracking-tight text-zinc-900">
-            Work with all the best creators.
+            Find the creators that fit your brand.
           </h2>
           <p className="mt-4 max-w-xl text-lg text-zinc-600">
             Find the right B2B voices, compare their audience fit, and book
@@ -356,93 +295,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ------------------------------------------------------- case study */}
-      <section id="case-study" className="scroll-mt-20 px-6 py-24">
-        <div className="mx-auto max-w-6xl">
-          <h2 className="text-4xl font-bold tracking-tight text-zinc-900">
-            Real teams. Measurable pipeline.
-          </h2>
-          <p className="mt-4 max-w-xl text-lg text-zinc-600">
-            See how B2B teams turn creator trust into attributable demand with
-            Naano.
-          </p>
-
-          <div className="mt-12 grid gap-6 lg:grid-cols-2">
-            <div className="rounded-2xl bg-gradient-to-br from-sky-100 to-sky-50 p-8">
-              <span className="text-xs font-semibold uppercase tracking-wide text-blue-600">
-                Video testimonial
-              </span>
-              <blockquote className="mt-4 text-xl font-semibold leading-snug text-zinc-900">
-                &ldquo;Naano became one of our fastest acquisition channels. We
-                know exactly what every creator brings.&rdquo;
-              </blockquote>
-              <div className="mt-6 flex items-center gap-3">
-                <Avatar name="Vincent Josse" />
-                <div>
-                  <p className="text-sm font-semibold text-zinc-900">
-                    Vincent Josse
-                  </p>
-                  <p className="text-sm text-zinc-500">
-                    CEO &amp; Founder, BlogSEO
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="rounded-2xl border border-zinc-200 bg-white p-8">
-              <span className="text-xs font-semibold uppercase tracking-wide text-zinc-400">
-                Case study
-              </span>
-              <h3 className="mt-3 text-xl font-semibold text-zinc-900">
-                How BlogSEO turned creator content into product signups
-              </h3>
-              <p className="mt-3 text-sm text-zinc-600">
-                BlogSEO briefed SEO &amp; SaaS creators on LinkedIn and X, then
-                traced every trial back to the post that drove it, all in
-                Naano.
-              </p>
-              <div className="mt-6 grid grid-cols-3 gap-4 border-t border-zinc-100 pt-6">
-                <div>
-                  <p className="text-2xl font-bold text-zinc-900">9</p>
-                  <p className="text-xs text-zinc-500">creators activated</p>
-                </div>
-                <div>
-                  <p className="text-2xl font-bold text-zinc-900">2,940</p>
-                  <p className="text-xs text-zinc-500">qualified clicks</p>
-                </div>
-                <div>
-                  <p className="text-2xl font-bold text-zinc-900">512</p>
-                  <p className="text-xs text-zinc-500">trials started</p>
-                </div>
-              </div>
-              <span className="mt-6 inline-block cursor-default text-sm font-semibold text-zinc-900">
-                Read case study →
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ------------------------------------------------------------ results */}
-      <section className="bg-zinc-900 px-6 py-24 text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-400">
-          The results
-        </p>
-        <h2 className="mt-3 text-4xl font-bold tracking-tight text-white">
-          Proven across thousands of campaigns.
-        </h2>
-        <div className="mx-auto mt-12 grid max-w-4xl grid-cols-2 gap-8 md:grid-cols-4">
-          {RESULTS.map((r) => (
-            <div key={r.label}>
-              <p className="text-4xl font-bold text-white">{r.value}</p>
-              <p className="mt-2 text-sm text-zinc-400">{r.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* ----------------------------------------------------- creator posts */}
       <section className="px-6 py-24">
+        <p className="mx-auto mb-6 max-w-6xl text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">
+          Sample campaign posts (illustrative data)
+        </p>
         <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2">
           {CREATOR_POSTS.map((c) => (
             <div
@@ -491,11 +348,10 @@ export default function Home() {
             Pricing.
           </h2>
           <p className="mt-4 text-lg text-zinc-600">
-            Start free. Upgrade when you want your time back.
+            Start free. Upgrade for extra help.
           </p>
           <p className="mt-2 text-sm text-zinc-500">
-            Choose whether you want to run creator campaigns in-house or have
-            Naano operate them.
+            This is a demo: no real billing takes place.
           </p>
 
           <div className="mt-12 grid gap-6 text-left md:grid-cols-2">
@@ -522,7 +378,7 @@ export default function Home() {
                   "Creator marketplace access",
                   "AI-powered brief creation",
                   "Track clicks, companies and pipeline",
-                  "Automatic creator payouts",
+                  "Simulated creator payouts",
                 ].map((f) => (
                   <li key={f} className="flex items-start gap-2">
                     <Check className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
@@ -543,11 +399,10 @@ export default function Home() {
                 Managed campaigns
               </p>
               <h3 className="mt-2 text-2xl font-bold text-zinc-900">
-                Get your time back.
+                Done for you.
               </h3>
               <p className="mt-2 text-sm text-zinc-600">
-                For teams that want Naano to operate their creator channel end
-                to end.
+                A concept plan for teams that want a done-for-you service. Not available in this demo.
               </p>
               <p className="mt-6 text-4xl font-bold text-zinc-900">
                 Custom quote
@@ -566,12 +421,12 @@ export default function Home() {
                 ))}
               </ul>
               <span className="mt-8 block cursor-default rounded-full border border-zinc-300 py-3 text-center text-sm font-medium text-zinc-900">
-                Book a campaign call
+                Not available in the demo
               </span>
             </div>
           </div>
           <p className="mt-6 text-xs text-zinc-500">
-            Campaign spend is separate. No lock-in. Cancel anytime.
+            Demo pricing only. No real charges are made.
           </p>
         </div>
       </section>
@@ -599,9 +454,9 @@ export default function Home() {
             ))}
           </div>
           <p className="mt-8 text-center text-sm text-zinc-500">
-            Still have questions?{" "}
+            Want to look around?{" "}
             <Link href="/signup" className="font-medium text-zinc-900 underline">
-              Talk to our team
+              Explore the demo
             </Link>
           </p>
         </div>
@@ -611,52 +466,22 @@ export default function Home() {
       <section className="bg-[linear-gradient(to_bottom,#ffffff_0%,#eaf6fd_50%,#cfeafa_100%)] px-6 py-24">
         <div className="mx-auto max-w-4xl text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-600">
-            Ready to launch?
+            Ready to explore?
           </p>
           <h2 className="mt-3 text-4xl font-bold tracking-tight text-zinc-900">
-            Your next creator campaign starts here.
+            See the platform in action.
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-lg text-zinc-600">
-            Get a clear creator strategy, campaign format and estimated budget
-            for your next launch.
+            Create a brand or creator account to explore campaigns, collaborations
+            and messaging.
           </p>
 
-          <div className="mt-10 rounded-2xl border border-white bg-white/80 p-8 text-left backdrop-blur">
-            <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">
-              Campaign strategy call
-            </p>
-            <h3 className="mt-2 text-xl font-semibold text-zinc-900">
-              30-minute working session
-            </h3>
-            <p className="mt-2 text-sm text-zinc-600">
-              Leave with a concrete plan for your next creator campaign.
-            </p>
-            <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm text-zinc-700">
-              {["Creator strategy", "Campaign format", "Budget recommendation"].map(
-                (f) => (
-                  <li key={f} className="flex items-center gap-2">
-                    <Check className="h-4 w-4 text-blue-600" />
-                    {f}
-                  </li>
-                )
-              )}
-            </ul>
-            <div className="mt-6 flex flex-wrap items-center gap-4">
-              <span className="cursor-default rounded-full bg-zinc-900 px-6 py-3 text-sm font-medium text-white">
-                Book a campaign call
-              </span>
-              <span className="text-xs text-zinc-500">
-                Pick a time on the next page.
-              </span>
-            </div>
-          </div>
-
-          <p className="mt-6 text-sm text-zinc-600">
-            Prefer to start yourself?{" "}
-            <Link href="/signup" className="font-medium text-zinc-900">
-              Start for free →
-            </Link>
-          </p>
+          <Link
+            href="/signup"
+            className="mt-8 inline-block rounded-full bg-zinc-900 px-6 py-3 text-sm font-medium text-white hover:bg-zinc-800"
+          >
+            Create an account
+          </Link>
         </div>
       </section>
 
@@ -666,23 +491,23 @@ export default function Home() {
           <div className="flex flex-col gap-3">
             <Link href="/" className="flex items-center gap-2">
               <Image
-                src="/naano-logomark.png"
-                alt="Naano"
+                src="/creatorlink-mark.svg" unoptimized
+                alt="CreatorLink"
                 width={30}
                 height={23}
                 className="object-contain"
               />
-              <span className="text-lg font-semibold text-zinc-900">naano</span>
+              <span className="text-lg font-semibold text-zinc-900">creatorlink</span>
             </Link>
             <p className="max-w-md text-2xl font-semibold tracking-tight text-zinc-900">
-              Turn LinkedIn creators into your best acquisition channel.
+              Creator campaigns, from brief to results.
             </p>
             <p className="text-sm text-zinc-500">
-              Trusted by B2B teams building creator-led acquisition.
+              A portfolio project by Ambreen Habib.
             </p>
           </div>
 
-          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-2">
             {FOOTER_COLUMNS.map((col) => (
               <div key={col.title}>
                 <p className="text-xs font-semibold uppercase tracking-wide text-zinc-400">
@@ -714,7 +539,7 @@ export default function Home() {
           </div>
 
           <p className="mt-12 border-t border-zinc-200 pt-6 text-xs text-zinc-400">
-            © 2026 naano. All rights reserved.
+            Portfolio project by Ambreen Habib. Sample data only. Not affiliated with any company.
           </p>
         </div>
       </footer>

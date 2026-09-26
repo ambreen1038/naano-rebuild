@@ -56,7 +56,7 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  // Runs on everything except static assets and the public click-tracking
-  // redirect, which must stay fast and unauthenticated.
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|r/).*)"],
+  // Runs on everything except static assets (including image files in public/)
+  // and the public click-tracking redirect, which must stay fast and unauthenticated.
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|r/|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)"],
 };

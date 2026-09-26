@@ -17,8 +17,8 @@ export function AuthSplitLayout({
         <div className="mx-auto flex w-full max-w-md items-center justify-between">
           <Link href="/">
             <Image
-              src="/naano-logomark.png"
-              alt="Naano"
+              src="/creatorlink-mark.svg" unoptimized
+              alt="CreatorLink"
               width={34}
               height={26}
               className="object-contain"

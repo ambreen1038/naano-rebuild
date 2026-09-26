@@ -275,7 +275,7 @@ export function ViewProfileModal({
             {pricingOpen && (
               <p className="mt-2 px-1 text-xs text-zinc-500">
                 This price is set directly by {creator.name.split(" ")[0]},
-                not calculated by Naano.
+                not calculated by CreatorLink.
               </p>
             )}
           </div>

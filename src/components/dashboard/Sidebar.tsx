@@ -22,15 +22,15 @@ export function Sidebar({
         <div className="flex flex-col gap-3 border-b border-zinc-200 px-4 py-4 dark:border-zinc-800">
           <div className="flex items-center gap-2">
             <Image
-              src="/naano-logomark.png"
-              alt="Naano"
+              src="/creatorlink-mark.svg" unoptimized
+              alt="CreatorLink"
               width={36}
               height={28}
               className="shrink-0 object-contain"
             />
             {expanded && (
               <span className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">
-                naano
+                creatorlink
               </span>
             )}
           </div>

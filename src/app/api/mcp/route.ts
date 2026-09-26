@@ -8,9 +8,9 @@ import { NextResponse } from "next/server";
 // implemented yet instead of pretending to be a working tool-call surface.
 export async function GET() {
   return NextResponse.json({
-    name: "naano-mcp",
+    name: "creatorlink-mcp",
     status: "not_implemented",
     message:
-      "This endpoint is a placeholder. Naano's remote MCP server (tool-calling over creators, campaigns and bookings) is not implemented in this build.",
+      "This endpoint is a placeholder. CreatorLink's remote MCP server (tool-calling over creators, campaigns and bookings) is not implemented in this build.",
   });
 }

@@ -63,7 +63,7 @@ export default async function LinkedInImportPage({
         <div className="flex items-start gap-2.5 rounded-xl bg-blue-50 p-3.5">
           <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-blue-600" />
           <p className="text-xs leading-relaxed text-zinc-600">
-            By clicking below, you authorize Naano to read your public profile
+            By clicking below, you authorize CreatorLink to read your public profile
             once: name, photo, headline, country and follower count. We do not
             import your posts, engagement or private analytics.
           </p>

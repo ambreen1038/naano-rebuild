@@ -130,7 +130,7 @@ export async function refreshLinkedInProfile(): Promise<ActionResult> {
     return {
       ok: false,
       error:
-        "Nothing to refresh — sign in with LinkedIn to let Naano pull your name and photo automatically.",
+        "Nothing to refresh — sign in with LinkedIn to let CreatorLink pull your name and photo automatically.",
     };
   }
 

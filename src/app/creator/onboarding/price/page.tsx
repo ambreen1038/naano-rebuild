@@ -94,7 +94,7 @@ export default async function CreatorPriceStepPage({
             Our recommendation
           </p>
           <p className="mt-2 text-center text-sm leading-relaxed text-zinc-600">
-            Naano recommends this starting price from the public audience and
+            CreatorLink recommends this starting price from the public audience and
             performance information currently available. You can change it now
             or later.
           </p>
@@ -116,7 +116,7 @@ export default async function CreatorPriceStepPage({
 
           <p className="mt-4 text-center text-xs leading-relaxed text-zinc-400">
             This is your net price per post. You can change it at any time from
-            your Naano profile.
+            your CreatorLink profile.
           </p>
         </div>
 

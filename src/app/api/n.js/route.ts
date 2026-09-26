@@ -11,12 +11,12 @@ const SCRIPT = `
   var endpoint = script ? new URL("/api/track", script.src).toString() : null;
 
   function readRef() {
-    var fromUrl = new URLSearchParams(location.search).get("naano_ref");
+    var fromUrl = new URLSearchParams(location.search).get("creatorlink_ref");
     if (fromUrl) {
-      document.cookie = "naano_ref=" + encodeURIComponent(fromUrl) + ";path=/;max-age=2592000";
+      document.cookie = "creatorlink_ref=" + encodeURIComponent(fromUrl) + ";path=/;max-age=2592000";
       return fromUrl;
     }
-    var match = document.cookie.match(/(?:^|; )naano_ref=([^;]+)/);
+    var match = document.cookie.match(/(?:^|; )creatorlink_ref=([^;]+)/);
     return match ? decodeURIComponent(match[1]) : null;
   }
 
@@ -31,8 +31,8 @@ const SCRIPT = `
     }).catch(function () {});
   }
 
-  var queued = (window.naano && window.naano.q) || [];
-  window.naano = function (event, data) {
+  var queued = (window.creatorlink && window.creatorlink.q) || [];
+  window.creatorlink = function (event, data) {
     send(event, data);
   };
   queued.forEach(function (args) {

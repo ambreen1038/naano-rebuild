@@ -3,7 +3,7 @@ import Image from "next/image";
 export function OpeningCompanyOverlay({ companyName }: { companyName: string }) {
   return (
     <div className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-4 bg-zinc-50 dark:bg-black">
-      <Image src="/naano-logomark.png" alt="" width={40} height={31} />
+      <Image src="/creatorlink-mark.svg" unoptimized alt="" width={40} height={31} />
       <div className="text-center">
         <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50">
           Opening company

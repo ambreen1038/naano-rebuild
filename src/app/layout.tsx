@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Naano Rebuild",
-  description: "The B2B LinkedIn Creator Marketplace",
+  title: "CreatorLink | Portfolio project",
+  description: "A portfolio project: a B2B creator campaign marketplace built with Next.js and Supabase, using sample data. Not affiliated with any company.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

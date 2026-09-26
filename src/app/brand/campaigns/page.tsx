@@ -191,7 +191,7 @@ export default async function CampaignsPage({
           <div className="p-5">
             <h3 className="font-semibold text-blue-600">Create a campaign</h3>
             <p className="mt-1 text-sm text-zinc-500">
-              Launch a new campaign in 2 minutes — with AI, the Naano team, or
+              Launch a new campaign in 2 minutes — with AI, the CreatorLink team, or
               an existing link.
             </p>
             <div className="mt-4 grid grid-cols-3 gap-4 rounded-xl bg-zinc-50 p-4 dark:bg-zinc-900">

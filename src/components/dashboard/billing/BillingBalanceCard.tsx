@@ -135,7 +135,7 @@ export function BillingBalanceCard({
                   Add budget
                 </h2>
                 <p className="mt-1 text-sm text-zinc-500">
-                  One-time deposit to your Naano balance. Use it across all
+                  One-time deposit to your CreatorLink balance. Use it across all
                   campaigns — no subscription.
                 </p>
 
@@ -214,7 +214,7 @@ export function BillingBalanceCard({
                       <strong className="text-zinc-900 dark:text-zinc-50">
                         No real payment is processed
                       </strong>{" "}
-                      — this credits your Naano balance directly for testing;
+                      — this credits your CreatorLink balance directly for testing;
                       no card details are collected and no payment processor
                       is involved.
                     </span>
@@ -225,7 +225,7 @@ export function BillingBalanceCard({
                       <strong className="text-zinc-900 dark:text-zinc-50">
                         No subscription
                       </strong>{" "}
-                      — funds stay in your Naano balance until used.
+                      — funds stay in your CreatorLink balance until used.
                     </span>
                   </p>
                   <p className="flex items-start gap-2">

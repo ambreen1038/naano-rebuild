@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { createServiceClient } from "@/lib/supabase/service";
 import { siteKeyToBrandId } from "@/lib/site-key";
 
-// Public, unauthenticated ingestion endpoint: this is what the Pixel Naano
+// Public, unauthenticated ingestion endpoint: this is what the Pixel CreatorLink
 // snippet (served from /api/n.js) actually calls from a brand's own
 // external website, so — like /r/[slug] — it uses the service-role client
 // (no user session exists to check RLS against).
@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // Attribution: naano_ref (a booking's tracking_slug) is set by /r/[slug]
+  // Attribution: creatorlink_ref (a booking's tracking_slug) is set by /r/[slug]
   // on the original creator-post click redirect and carried forward by the
   // pixel script. Only trusted when it resolves to a booking under THIS
   // brand's own campaigns — otherwise treated as absent.
@@ -100,7 +100,7 @@ export async function POST(request: NextRequest) {
       person_name: personName,
       company_name: companyName,
       commitment,
-      source: "Pixel Naano",
+      source: "Pixel CreatorLink",
     });
   }
 

@@ -21,7 +21,7 @@ export default function BrandSignupPage() {
       }
     >
       <h1 className="text-2xl font-bold tracking-tight text-zinc-900">
-        Join Naano
+        Join CreatorLink
       </h1>
       <p className="mt-4 font-semibold text-blue-600">
         Creators. Brands. Results.

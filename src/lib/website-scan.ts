@@ -62,7 +62,7 @@ export async function scanWebsite(url: string): Promise<WebsiteScanResult> {
     const res = await fetch(parsed.toString(), {
       signal: controller.signal,
       redirect: "follow",
-      headers: { "User-Agent": "Mozilla/5.0 (compatible; NaanoBot/1.0)" },
+      headers: { "User-Agent": "Mozilla/5.0 (compatible; CreatorLinkBot/1.0)" },
     });
 
     if (!res.ok) {

@@ -12,7 +12,7 @@ export default async function CreatorIntegrationsPage() {
         Integrations
       </h1>
       <p className="mt-1 text-sm text-zinc-500">
-        Connect accounts Naano can use to keep your profile up to date.
+        Connect accounts CreatorLink can use to keep your profile up to date.
       </p>
 
       <div className="mt-6 flex items-center gap-4 rounded-2xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-950">
@@ -24,7 +24,7 @@ export default async function CreatorIntegrationsPage() {
           <p className="text-sm text-zinc-500">
             {connected
               ? "Connected — used to keep your name and photo up to date."
-              : "Not connected. Connecting lets Naano pull your name and photo automatically."}
+              : "Not connected. Connecting lets CreatorLink pull your name and photo automatically."}
           </p>
         </div>
         {connected ? (
@@ -37,7 +37,7 @@ export default async function CreatorIntegrationsPage() {
       </div>
 
       <p className="mt-4 text-xs text-zinc-400">
-        Naano only ever imports what LinkedIn&apos;s basic sign-in explicitly
+        CreatorLink only ever imports what LinkedIn&apos;s basic sign-in explicitly
         authorizes (your name and profile photo). Follower counts, post
         history and engagement data require LinkedIn&apos;s separate, gated
         Marketing Developer Platform, which isn&apos;t part of this

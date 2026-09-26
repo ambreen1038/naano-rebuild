@@ -138,7 +138,7 @@ export function ProfessionalSetupForm({
               required
               className="mt-0.5 h-4 w-4 shrink-0 accent-blue-600"
             />
-            I authorize Naano to issue invoices in my name and on my
+            I authorize CreatorLink to issue invoices in my name and on my
             behalf for services delivered through the platform.
           </label>
 

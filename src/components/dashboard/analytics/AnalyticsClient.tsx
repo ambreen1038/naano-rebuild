@@ -200,7 +200,7 @@ export function AnalyticsClient({
               No public posts available
             </p>
             <p className="mt-1 max-w-xs text-sm text-zinc-500">
-              LinkedIn doesn&apos;t offer a public post-history API to Naano,
+              LinkedIn doesn&apos;t offer a public post-history API to CreatorLink,
               so this can&apos;t populate today.
             </p>
           </div>

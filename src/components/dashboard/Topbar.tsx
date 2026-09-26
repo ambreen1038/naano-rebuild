@@ -75,7 +75,7 @@ export function Topbar({
           className="hidden items-center gap-1.5 rounded-full border border-zinc-200 px-3 py-1.5 text-xs font-medium text-zinc-500 sm:flex dark:border-zinc-800 dark:text-zinc-400"
         >
           <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
-          NAANO MCP
+          CREATORLINK MCP
           <span className="text-zinc-300 dark:text-zinc-700">/</span>
           Connect
         </Link>

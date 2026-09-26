@@ -171,7 +171,7 @@ export function SettingsClient({
   return (
     <div className="p-8">
       <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">
-        Naano workspace
+        CreatorLink workspace
       </p>
       <h1 className="mt-1 text-2xl font-bold text-zinc-900 dark:text-zinc-50">
         Settings

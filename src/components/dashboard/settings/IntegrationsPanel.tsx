@@ -30,13 +30,13 @@ const CLIENTS = [
     icon: Sparkles,
     iconClass: "bg-orange-50 text-orange-500 dark:bg-orange-950",
     name: "Claude",
-    description: "Use Naano from Claude and Cowork.",
+    description: "Use CreatorLink from Claude and Cowork.",
   },
   {
     icon: Bot,
     iconClass: "bg-zinc-100 text-zinc-700 dark:bg-zinc-900 dark:text-zinc-300",
     name: "ChatGPT",
-    description: "Use Naano from a custom ChatGPT app.",
+    description: "Use CreatorLink from a custom ChatGPT app.",
   },
   {
     icon: Cable,
@@ -77,15 +77,15 @@ export function IntegrationsPanel({ info }: { info: IntegrationsInfo }) {
   const mcpUrl = `${info.origin}/api/mcp`;
 
   const snippet = `<script>
-  window.naano = window.naano || function () {
-    (window.naano.q = window.naano.q || []).push(arguments);
+  window.creatorlink = window.creatorlink || function () {
+    (window.creatorlink.q = window.creatorlink.q || []).push(arguments);
   };
 </script>
 <script async src="${info.origin}/api/n.js"
         data-site="${info.siteKey}"></script>`;
 
-  const trackSnippet = `naano('track', 'signup', { email });
-naano('track', 'purchase', { value: 49, order_id });`;
+  const trackSnippet = `creatorlink('track', 'signup', { email });
+creatorlink('track', 'purchase', { value: 49, order_id });`;
 
   return (
     <div className="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-950">
@@ -94,7 +94,7 @@ naano('track', 'purchase', { value: 49, order_id });`;
         Integrations
       </p>
       <h2 className="mt-1 text-xl font-bold text-zinc-900 dark:text-zinc-50">
-        Use Naano from your AI assistant
+        Use CreatorLink from your AI assistant
       </h2>
       <p className="mt-1 text-sm text-zinc-500">
         Search creators, build campaigns and manage collaborations from
@@ -108,7 +108,7 @@ naano('track', 'purchase', { value: 49, order_id });`;
             <span className="h-2.5 w-2.5 rounded-full bg-zinc-700" />
             <span className="h-2.5 w-2.5 rounded-full bg-zinc-700" />
             <span className="ml-2 text-xs font-medium text-zinc-400">
-              NAANO://MCP
+              CREATORLINK://MCP
             </span>
           </div>
           <span className="flex items-center gap-1.5 text-xs font-medium text-emerald-400">
@@ -209,8 +209,8 @@ naano('track', 'purchase', { value: 49, order_id });`;
 
       <div className="mt-4 flex items-start gap-2 rounded-lg bg-zinc-50 px-3.5 py-3 text-xs text-zinc-500 dark:bg-zinc-900">
         <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-zinc-400" />
-        The assistant only sees the active Naano workspace your account can
-        access. Naano rechecks identity, workspace permissions, rate limits
+        The assistant only sees the active CreatorLink workspace your account can
+        access. CreatorLink rechecks identity, workspace permissions, rate limits
         and every write confirmation on the server.
       </div>
 
@@ -218,7 +218,7 @@ naano('track', 'purchase', { value: 49, order_id });`;
 
       <div className="flex items-center justify-between">
         <h3 className="font-semibold text-zinc-900 dark:text-zinc-50">
-          Pixel Naano
+          Pixel CreatorLink
         </h3>
         <span
           className={`flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium ${
@@ -245,7 +245,7 @@ naano('track', 'purchase', { value: 49, order_id });`;
       <p className="mt-1 text-xs text-zinc-500">
         Paste this snippet before <code>&lt;/head&gt;</code> on every page of
         your site. Visits attribute themselves; for signups and purchases,
-        call <code>naano(&apos;track&apos;, …)</code> in your product only
+        call <code>creatorlink(&apos;track&apos;, …)</code> in your product only
         after the corresponding action succeeds.{" "}
         {info.installed
           ? "Events are being received."

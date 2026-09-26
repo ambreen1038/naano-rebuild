@@ -31,7 +31,7 @@ export function CreatorCardShareButtons({
     const url = cardUrl();
     if (navigator.share) {
       try {
-        await navigator.share({ title: `${creatorName} on Naano`, url });
+        await navigator.share({ title: `${creatorName} on CreatorLink`, url });
       } catch {
         // User dismissed the native share sheet — not an error.
       }

@@ -13,7 +13,7 @@ export default function CreatorSignupPage() {
         Step 1 of 4
       </p>
       <h1 className="mt-2 text-2xl font-bold tracking-tight text-zinc-900">
-        Join Naano
+        Join CreatorLink
       </h1>
       <p className="mt-2 text-sm text-zinc-600">
         Get paid to create LinkedIn content for B2B brands you actually use.

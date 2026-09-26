@@ -508,11 +508,11 @@ export function MyCardClient({
                 convention as the Brand Portal's "Book a call". */}
             <div className="rounded-2xl border border-blue-100 bg-blue-50/60 p-4 dark:border-blue-950 dark:bg-blue-950/30">
               <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
-                Become Naano Verified
+                Become CreatorLink Verified
               </p>
               <p className="mt-1 text-xs text-zinc-500">
                 Public profile refresh is fine for basic card data. To
-                unlock Naano Verified analytics, connect with the Naano
+                unlock CreatorLink Verified analytics, connect with the CreatorLink
                 browser extension.
               </p>
               <span

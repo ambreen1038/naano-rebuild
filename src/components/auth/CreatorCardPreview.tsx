@@ -81,13 +81,13 @@ export function CreatorCardPreview({
           </div>
           <div className="flex h-full items-center justify-center gap-2">
             <Image
-              src="/naano-logomark.png"
+              src="/creatorlink-mark.svg" unoptimized
               alt=""
               width={26}
               height={20}
               className="object-contain brightness-0 invert"
             />
-            <span className="text-lg font-semibold text-white">naano</span>
+            <span className="text-lg font-semibold text-white">creatorlink</span>
           </div>
           <div className="absolute -bottom-10 left-1/2 -translate-x-1/2">
             {avatarUrl ? (

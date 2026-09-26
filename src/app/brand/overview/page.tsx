@@ -187,7 +187,7 @@ export default async function OverviewPage() {
         <div>
           <p className="text-sm text-zinc-500">Hello {firstName} 👋</p>
           <h1 className="mt-1 text-2xl font-bold text-zinc-900 dark:text-zinc-50">
-            Here is what is happening for {companyName} on Naano.
+            Here is what is happening for {companyName} on CreatorLink.
           </h1>
         </div>
         <Link
@@ -301,7 +301,7 @@ export default async function OverviewPage() {
         </div>
       </div>
 
-      {/* Decorative — booking a call routes to Naano's Managed Campaigns
+      {/* Decorative — booking a call routes to CreatorLink's Managed Campaigns
           offering, which is out of scope for this rebuild. */}
       <div className="mt-4 flex flex-col items-start gap-4 rounded-2xl border border-zinc-200 bg-white p-5 sm:flex-row sm:items-center dark:border-zinc-800 dark:bg-zinc-950">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-zinc-900 text-sm font-semibold text-white dark:bg-zinc-50 dark:text-zinc-900">
@@ -310,13 +310,13 @@ export default async function OverviewPage() {
         <div className="flex-1">
           <span className="mb-1 inline-flex items-center gap-1.5 text-xs font-medium text-emerald-600">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-            Naano experts available
+            CreatorLink experts available
           </span>
           <h3 className="font-semibold text-zinc-900 dark:text-zinc-50">
             Need an expert eye? Book a free call.
           </h3>
           <p className="text-sm text-zinc-500">
-            15 minutes with a Naano expert to frame your next campaign or
+            15 minutes with a CreatorLink expert to frame your next campaign or
             improve the posts already running.
           </p>
         </div>

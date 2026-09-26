@@ -122,15 +122,15 @@ export function MessagesClient({
   onSend: (bookingId: string, body: string) => Promise<MessageActionResult>;
   onMarkRead: (bookingId: string) => Promise<void>;
 }) {
-  const [selected, setSelected] = useState<"naanobot" | string | null>(null);
-  const [hasOpenedNaanoBot, setHasOpenedNaanoBot] = useState(false);
+  const [selected, setSelected] = useState<"creatorlinkbot" | string | null>(null);
+  const [hasOpenedCreatorLinkBot, setHasOpenedCreatorLinkBot] = useState(false);
   const [filter, setFilter] = useState<ListFilter>("all");
   const [campaignFilterId, setCampaignFilterId] = useState<string | null>(null);
   const [search, setSearch] = useState("");
   const [botMessages, setBotMessages] = useState<BotMessage[]>([
     {
       role: "bot",
-      text: "Hi, I'm the Naano assistant. Ask me a question or choose an option above — the team can step in if needed.",
+      text: "Hi, I'm the CreatorLink assistant. Ask me a question or choose an option above — the team can step in if needed.",
     },
   ]);
   const [input, setInput] = useState("");
@@ -207,10 +207,10 @@ export function MessagesClient({
     };
   }, [supabase, viewerRole, onMarkRead]);
 
-  const showNaanoBotRow =
+  const showCreatorLinkBotRow =
     filter === "all" &&
     (search.trim() === "" ||
-      "naanobot".includes(search.trim().toLowerCase()));
+      "creatorlinkbot".includes(search.trim().toLowerCase()));
 
   const visibleThreads = useMemo(() => {
     let list = threadsState;
@@ -234,9 +234,9 @@ export function MessagesClient({
 
   const selectedThread = threadsState.find((t) => t.bookingId === selected) ?? null;
 
-  function openNaanoBot() {
-    setSelected("naanobot");
-    setHasOpenedNaanoBot(true);
+  function openCreatorLinkBot() {
+    setSelected("creatorlinkbot");
+    setHasOpenedCreatorLinkBot(true);
   }
 
   function openThread(thread: MessageThread) {
@@ -378,18 +378,18 @@ export function MessagesClient({
           </details>
         </div>
         <div className="mt-3 flex-1 overflow-y-auto">
-          {showNaanoBotRow && (
+          {showCreatorLinkBotRow && (
             <button
               type="button"
-              onClick={openNaanoBot}
+              onClick={openCreatorLinkBot}
               className={`flex w-full items-start gap-3 px-5 py-4 text-left ${
-                selected === "naanobot"
+                selected === "creatorlinkbot"
                   ? "bg-zinc-50 dark:bg-zinc-900"
                   : "hover:bg-zinc-50 dark:hover:bg-zinc-900"
               }`}
             >
               <Image
-                src="/naano-logomark.png"
+                src="/creatorlink-mark.svg" unoptimized
                 alt=""
                 width={32}
                 height={25}
@@ -398,7 +398,7 @@ export function MessagesClient({
               <div className="min-w-0 flex-1">
                 <div className="flex items-center justify-between">
                   <p className="flex items-center gap-1.5 font-semibold text-zinc-900 dark:text-zinc-50">
-                    NaanoBot
+                    CreatorLinkBot
                     <span
                       title="This assistant thread isn't persisted and doesn't reach a real person yet."
                       className="rounded-full bg-amber-50 px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-amber-700 dark:bg-amber-950 dark:text-amber-400"
@@ -412,7 +412,7 @@ export function MessagesClient({
                   <p className="truncate text-sm text-zinc-500">
                     A question or need help? Click here.
                   </p>
-                  {!hasOpenedNaanoBot && (
+                  {!hasOpenedCreatorLinkBot && (
                     <span className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-blue-600 text-[10px] text-white">
                       1
                     </span>
@@ -463,7 +463,7 @@ export function MessagesClient({
             );
           })}
 
-          {!showNaanoBotRow && visibleThreads.length === 0 && (
+          {!showCreatorLinkBotRow && visibleThreads.length === 0 && (
             <p className="px-5 py-4 text-sm text-zinc-400">
               No conversation yet.
             </p>
@@ -471,13 +471,13 @@ export function MessagesClient({
         </div>
       </div>
 
-      {selected === "naanobot" ? (
+      {selected === "creatorlinkbot" ? (
         <div className="flex flex-1 flex-col">
           <div className="flex items-center gap-3 border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
-            <Image src="/naano-logomark.png" alt="" width={32} height={25} />
+            <Image src="/creatorlink-mark.svg" unoptimized alt="" width={32} height={25} />
             <div>
               <p className="font-semibold text-zinc-900 dark:text-zinc-50">
-                Naano help center
+                CreatorLink help center
               </p>
               <p className="flex items-center gap-1.5 text-xs text-zinc-500">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
@@ -489,7 +489,7 @@ export function MessagesClient({
           <div className="flex-1 overflow-y-auto px-6 py-6">
             <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-sky-100 to-sky-50 p-6 dark:from-sky-950 dark:to-zinc-950">
               <p className="text-xs font-semibold uppercase tracking-wide text-blue-600">
-                ✦ Your Naano space
+                ✦ Your CreatorLink space
               </p>
               <h2 className="mt-1 max-w-sm text-xl font-bold text-zinc-900 dark:text-zinc-50">
                 How can we help?
@@ -501,7 +501,7 @@ export function MessagesClient({
               <div className="absolute right-6 top-1/2 hidden -translate-y-1/2 sm:block">
                 <div className="relative flex h-20 w-20 items-center justify-center rounded-full bg-white/70 shadow-sm">
                   <Image
-                    src="/naano-logomark.png"
+                    src="/creatorlink-mark.svg" unoptimized
                     alt=""
                     width={32}
                     height={25}
@@ -549,12 +549,12 @@ export function MessagesClient({
                     </div>
                     <span className="ml-1 flex items-center gap-1.5 text-xs text-zinc-400">
                       <Image
-                        src="/naano-logomark.png"
+                        src="/creatorlink-mark.svg" unoptimized
                         alt=""
                         width={14}
                         height={11}
                       />
-                      Naano
+                      CreatorLink
                     </span>
                   </div>
                 ) : (
@@ -579,7 +579,7 @@ export function MessagesClient({
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask Naano a question..."
+                placeholder="Ask CreatorLink a question..."
                 className="w-full bg-transparent text-sm text-zinc-900 outline-none placeholder:text-zinc-400 dark:text-zinc-50"
               />
               <button

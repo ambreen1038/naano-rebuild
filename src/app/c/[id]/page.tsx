@@ -34,7 +34,7 @@ export default async function PublicCreatorCardPage({
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-sky-50 to-white px-6 py-16">
       <Link href="/" className="mb-8 text-lg font-semibold text-zinc-900">
-        naano
+        creatorlink
       </Link>
       <CreatorCardPreview
         showPostDataPill
@@ -50,7 +50,7 @@ export default async function PublicCreatorCardPage({
         href="/signup/brand"
         className="mt-8 rounded-full bg-zinc-900 px-6 py-3 text-sm font-medium text-white hover:bg-zinc-800"
       >
-        Book {creator.name?.split(" ")[0] || "this creator"} on Naano
+        Book {creator.name?.split(" ")[0] || "this creator"} on CreatorLink
       </Link>
     </div>
   );
